@@ -1,0 +1,51 @@
+# Cluster Growing Summary (mri_surfcluster)
+# $Id: mri_surfcluster.c,v 1.57.2.3 2016/11/17 18:19:42 zkaufman Exp $
+# $Id: mrisurf.c,v 1.781.2.6 2016/12/27 16:47:14 zkaufman Exp $
+# CreationTime 2023/05/05-10:14:55-GMT
+# cmdline mri_surfcluster.bin --in /home/r095290/datin_ELS/scripts/lh.els_6.w_g.pct/stack7.p.mgh --csd /mnt/appl/tools/freesurfer/6.0.0/average/mult-comp-cor/fsaverage/lh/cortex/fwhm16/abs/th30/mc-z.csd --cwsig /home/r095290/datin_ELS/scripts/lh.els_6.w_g.pct/stack7.cache.th30.abs.sig.cluster.mgh --vwsig /home/r095290/datin_ELS/scripts/lh.els_6.w_g.pct/stack7.cache.th30.abs.sig.voxel.mgh --sum /home/r095290/datin_ELS/scripts/lh.els_6.w_g.pct/stack7.cache.th30.abs.sig.cluster.summary --ocn /home/r095290/datin_ELS/scripts/lh.els_6.w_g.pct/stack7.cache.th30.abs.sig.ocn.mgh --oannot /home/r095290/datin_ELS/scripts/lh.els_6.w_g.pct/stack7.cache.th30.abs.sig.ocn.annot --annot aparc --cwpvalthresh 0.025 --o /home/r095290/datin_ELS/scripts/lh.els_6.w_g.pct/stack7.cache.th30.abs.sig.masked.mgh --no-fixmni --surf white --mask /home/r095290/datin_ELS/scripts/lh.els_6.w_g.pct/finalMask.mgh 
+# cwd /home/r095290/datin_ELS/scripts
+# sysname  Linux
+# hostname kpsy0001l002
+# machine  x86_64
+# FixVertexAreaFlag 1
+# FixSurfClusterArea 1
+# 
+# Input      /home/r095290/datin_ELS/scripts/lh.els_6.w_g.pct/stack7.p.mgh
+# Frame Number      0
+# srcsubj fsaverage
+# hemi lh
+# surface white
+# group_avg_surface_area 82220
+# group_avg_vtxarea_loaded 1
+# annot aparc
+# SUBJECTS_DIR /mnt/data/genr/mrdata/GenR_MRI/bids/derivatives/freesurfer/6.0.0
+# SearchSpace_mm2 75027.2
+# SearchSpace_vtx 146215
+# Bonferroni 0
+# Minimum Threshold 3
+# Maximum Threshold infinity
+# Threshold Sign    abs
+# AdjustThreshWhenOneTail 1
+# CW PValue Threshold: 0.025 
+# Area Threshold    0 mm^2
+# CSD thresh  3.000000
+# CSD nreps    10000
+# CSD simtype  null-z
+# CSD contrast NA
+# CSD confint  90.000000
+# Overall max 25.192 at vertex 56211
+# Overall min 0 at vertex 8
+# NClusters          10
+# FixMNI = 0
+# 
+# ClusterNo  Max   VtxMax   Size(mm^2)  MNIX   MNIY   MNIZ    CWP    CWPLow    CWPHi   NVtxs    WghtVtx   Annot
+   1       25.192   56211  12159.04    -26.8  -24.2   52.6  0.00010  0.00000  0.00020  29318   215953.94  precentral
+   2       19.690  114639  11957.49    -18.7  -85.0   -9.5  0.00010  0.00000  0.00020  20079   127717.86  lingual
+   3       13.194    5227   3280.57    -18.7  -71.8   16.6  0.00010  0.00000  0.00020   5477    35052.08  cuneus
+   4        6.470   42055   1276.05     -7.9   64.4   -3.2  0.00010  0.00000  0.00020   1873     7333.17  frontalpole
+   5        4.499  124159    503.69    -17.8   34.7   40.2  0.00010  0.00000  0.00020    813     2750.12  superiorfrontal
+   6        4.387   70980    292.58    -24.1   47.5   11.6  0.00290  0.00220  0.00360    421     1563.58  rostralmiddlefrontal
+   7        6.062   67849    260.42     -8.9   44.7  -20.4  0.00530  0.00440  0.00620    444     1923.36  medialorbitofrontal
+   8        3.832  108238    239.22    -35.1   34.1   28.9  0.00940  0.00820  0.01060    357     1195.07  rostralmiddlefrontal
+   9        4.866   80391    236.50    -36.1   15.5   30.3  0.00950  0.00830  0.01080    426     1580.30  caudalmiddlefrontal
+  10        3.672   49808    210.84    -38.8    8.6   41.9  0.01710  0.01540  0.01880    321     1060.20  caudalmiddlefrontal

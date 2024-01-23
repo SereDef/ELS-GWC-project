@@ -1,0 +1,45 @@
+# Cluster Growing Summary (mri_surfcluster)
+# $Id: mri_surfcluster.c,v 1.57.2.3 2016/11/17 18:19:42 zkaufman Exp $
+# $Id: mrisurf.c,v 1.781.2.6 2016/12/27 16:47:14 zkaufman Exp $
+# CreationTime 2023/05/05-10:20:31-GMT
+# cmdline mri_surfcluster.bin --in /home/r095290/datin_ELS/scripts/lh.els_global.w_g.pct/stack4.p.mgh --csd /mnt/appl/tools/freesurfer/6.0.0/average/mult-comp-cor/fsaverage/lh/cortex/fwhm16/abs/th30/mc-z.csd --cwsig /home/r095290/datin_ELS/scripts/lh.els_global.w_g.pct/stack4.cache.th30.abs.sig.cluster.mgh --vwsig /home/r095290/datin_ELS/scripts/lh.els_global.w_g.pct/stack4.cache.th30.abs.sig.voxel.mgh --sum /home/r095290/datin_ELS/scripts/lh.els_global.w_g.pct/stack4.cache.th30.abs.sig.cluster.summary --ocn /home/r095290/datin_ELS/scripts/lh.els_global.w_g.pct/stack4.cache.th30.abs.sig.ocn.mgh --oannot /home/r095290/datin_ELS/scripts/lh.els_global.w_g.pct/stack4.cache.th30.abs.sig.ocn.annot --annot aparc --cwpvalthresh 0.025 --o /home/r095290/datin_ELS/scripts/lh.els_global.w_g.pct/stack4.cache.th30.abs.sig.masked.mgh --no-fixmni --surf white --mask /home/r095290/datin_ELS/scripts/lh.els_global.w_g.pct/finalMask.mgh 
+# cwd /home/r095290/datin_ELS/scripts
+# sysname  Linux
+# hostname kpsy0001l002
+# machine  x86_64
+# FixVertexAreaFlag 1
+# FixSurfClusterArea 1
+# 
+# Input      /home/r095290/datin_ELS/scripts/lh.els_global.w_g.pct/stack4.p.mgh
+# Frame Number      0
+# srcsubj fsaverage
+# hemi lh
+# surface white
+# group_avg_surface_area 82220
+# group_avg_vtxarea_loaded 1
+# annot aparc
+# SUBJECTS_DIR /mnt/data/genr/mrdata/GenR_MRI/bids/derivatives/freesurfer/6.0.0
+# SearchSpace_mm2 75027.2
+# SearchSpace_vtx 146215
+# Bonferroni 0
+# Minimum Threshold 3
+# Maximum Threshold infinity
+# Threshold Sign    abs
+# AdjustThreshWhenOneTail 1
+# CW PValue Threshold: 0.025 
+# Area Threshold    0 mm^2
+# CSD thresh  3.000000
+# CSD nreps    10000
+# CSD simtype  null-z
+# CSD contrast NA
+# CSD confint  90.000000
+# Overall max 31.3421 at vertex 3705
+# Overall min 0 at vertex 8
+# NClusters          4
+# FixMNI = 0
+# 
+# ClusterNo  Max   VtxMax   Size(mm^2)  MNIX   MNIY   MNIZ    CWP    CWPLow    CWPHi   NVtxs    WghtVtx   Annot
+   1       31.342    3705  33516.70    -31.7    5.6   10.6  0.00010  0.00000  0.00020  64602   431063.78  insula
+   2        6.261   16683    849.46     -7.9   20.6   45.1  0.00010  0.00000  0.00020   1461     6016.94  superiorfrontal
+   3       11.019   83519    780.55     -9.1    7.6   35.9  0.00010  0.00000  0.00020   1799    10627.48  caudalanteriorcingulate
+   4        6.353   55616    279.49    -41.7  -76.1   11.8  0.00380  0.00300  0.00460    483     1999.77  inferiorparietal

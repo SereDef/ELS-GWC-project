@@ -1,0 +1,14 @@
+variable	cluster	n_vertices	mean_w_g.pct	mean_coefficient	mean_se	top_region1	top_region2	top_region3
+(Intercept)	1	145773	33.2681254553841	34.5072284260369	1.31348329050497	superiorfrontal (8.15%, 100%)	precentral (7.34%, 100%)	superiorparietal (7.01%, 100%)
+age_child_mri_f09	1	10552	33.1870856636016	-0.593413591139171	0.119022960248569	precentral (49.38%, 48.68%)	postcentral (29.47%, 34.03%)	paracentral (19.84%, 54.66%)
+age_child_mri_f09	2	4230	33.8914650224519	-0.406372796030755	0.0967730371012896	superiorparietal (47.71%, 19.74%)	precuneus (30.59%, 16.23%)	cuneus (16.52%, 42.67%)
+age_child_mri_f09	3	2103	33.2195184432389	-0.383817537818361	0.0894824899679924	lateraloccipital (60.87%, 21.47%)	lingual (30.62%, 16.54%)	fusiform (8.51%, 3.84%)
+age_child_mri_f09	4	2038	32.3341573733386	0.475669239509679	0.129223343624685	insula (51.23%, 20.51%)	superiortemporal (44.16%, 13.10%)	temporalpole (4.61%, 11.51%)
+age_child_mri_f09	5	1173	33.2149999842307	-0.707874671628307	0.177214274155921	superiorfrontal (84.40%, 8.33%)	frontalpole (7.76%, 24.66%)	rostralmiddlefrontal (7.08%, 1.06%)
+age_child_mri_f09	6	679	34.1594134331178	0.435330492802326	0.119306664414627	parahippocampal (83.21%, 32.43%)	fusiform (16.35%, 2.38%)	entorhinal (0.44%, 0.33%)
+sex2	1	69672	33.2104882139901	-0.762925785307159	0.142229866713285	inferiorparietal (11.70%, 84.23%)	precentral (9.31%, 60.60%)	superiorparietal (8.98%, 61.20%)
+sex2	2	2785	33.4054343180425	-0.770369679388495	0.157689867777285	superiorfrontal (35.37%, 8.29%)	caudalanteriorcingulate (33.72%, 58.40%)	posteriorcingulate (19.64%, 18.27%)
+sex2	3	2025	33.5604719077304	-0.751421805370001	0.145799603955245	medialorbitofrontal (62.72%, 45.34%)	lateralorbitofrontal (37.28%, 17.34%)	NA
+sex2	4	899	32.3801095387962	-0.64495068947651	0.163549236083057	superiorfrontal (67.85%, 5.14%)	caudalmiddlefrontal (32.15%, 8.27%)	NA
+sex2	5	905	33.7546172684285	-0.606134389744279	0.157076065695088	superiorfrontal (100%, 7.62%)	NA	NA
+sex2	6	461	33.9754290916152	-0.556904580937032	0.150145307344883	precentral (100%, 4.31%)	NA	NA

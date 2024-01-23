@@ -1,0 +1,4 @@
+stack_number	stack_name
+1	(Intercept)
+2	age_child_mri_f09
+3	sex2

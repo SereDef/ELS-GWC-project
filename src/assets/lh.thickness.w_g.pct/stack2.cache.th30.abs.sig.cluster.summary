@@ -1,0 +1,44 @@
+# Cluster Growing Summary (mri_surfcluster)
+# $Id: mri_surfcluster.c,v 1.57.2.3 2016/11/17 18:19:42 zkaufman Exp $
+# $Id: mrisurf.c,v 1.781.2.6 2016/12/27 16:47:14 zkaufman Exp $
+# CreationTime 2023/05/09-12:41:27-GMT
+# cmdline mri_surfcluster.bin --in /home/r095290/datin_ELS/scripts/lh.thickness.w_g.pct/stack2.p.mgh --csd /mnt/appl/tools/freesurfer/6.0.0/average/mult-comp-cor/fsaverage/lh/cortex/fwhm15/abs/th30/mc-z.csd --cwsig /home/r095290/datin_ELS/scripts/lh.thickness.w_g.pct/stack2.cache.th30.abs.sig.cluster.mgh --vwsig /home/r095290/datin_ELS/scripts/lh.thickness.w_g.pct/stack2.cache.th30.abs.sig.voxel.mgh --sum /home/r095290/datin_ELS/scripts/lh.thickness.w_g.pct/stack2.cache.th30.abs.sig.cluster.summary --ocn /home/r095290/datin_ELS/scripts/lh.thickness.w_g.pct/stack2.cache.th30.abs.sig.ocn.mgh --oannot /home/r095290/datin_ELS/scripts/lh.thickness.w_g.pct/stack2.cache.th30.abs.sig.ocn.annot --annot aparc --cwpvalthresh 0.025 --o /home/r095290/datin_ELS/scripts/lh.thickness.w_g.pct/stack2.cache.th30.abs.sig.masked.mgh --no-fixmni --surf white --mask /home/r095290/datin_ELS/scripts/lh.thickness.w_g.pct/finalMask.mgh 
+# cwd /home/r095290/datin_ELS/scripts
+# sysname  Linux
+# hostname kpsy0001l002
+# machine  x86_64
+# FixVertexAreaFlag 1
+# FixSurfClusterArea 1
+# 
+# Input      /home/r095290/datin_ELS/scripts/lh.thickness.w_g.pct/stack2.p.mgh
+# Frame Number      0
+# srcsubj fsaverage
+# hemi lh
+# surface white
+# group_avg_surface_area 82220
+# group_avg_vtxarea_loaded 1
+# annot aparc
+# SUBJECTS_DIR /mnt/data/genr/mrdata/GenR_MRI/bids/derivatives/freesurfer/6.0.0
+# SearchSpace_mm2 75027.2
+# SearchSpace_vtx 146215
+# Bonferroni 0
+# Minimum Threshold 3
+# Maximum Threshold infinity
+# Threshold Sign    abs
+# AdjustThreshWhenOneTail 1
+# CW PValue Threshold: 0.025 
+# Area Threshold    0 mm^2
+# CSD thresh  3.000000
+# CSD nreps    10000
+# CSD simtype  null-z
+# CSD contrast NA
+# CSD confint  90.000000
+# Overall max 45.7323 at vertex 36723
+# Overall min 0 at vertex 8
+# NClusters          3
+# FixMNI = 0
+# 
+# ClusterNo  Max   VtxMax   Size(mm^2)  MNIX   MNIY   MNIZ    CWP    CWPLow    CWPHi   NVtxs    WghtVtx   Annot
+   1       45.732   36723  58099.69    -37.7  -48.6   56.5  0.00010  0.00000  0.00020  116540  1701328.62  superiorparietal
+   2       38.944  137300   3581.49     -4.1  -73.3    2.2  0.00010  0.00000  0.00020   4782    54895.21  lingual
+   3        7.423   91387    549.43    -29.1  -52.8   -5.8  0.00010  0.00000  0.00020   1065     4989.29  lingual
