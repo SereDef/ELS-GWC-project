@@ -1,0 +1,15 @@
+variable	cluster	n_vertices	mean_w_g.pct	mean_coefficient	mean_se	top_region1	top_region2	top_region3
+(Intercept)	1	145773	33.2732974771262	34.5116605691086	1.31519599800542	superiorfrontal (8.15%, 100%)	precentral (7.34%, 100%)	superiorparietal (7.01%, 100%)
+pre_parental_risk	1	683	33.0284609539594	-3.08903104599189	0.848400877562309	inferiorparietal (72.04%, 5.08%)	middletemporal (22.99%, 3.10%)	bankssts (4.98%, 1.55%)
+age_child_mri_f09	1	9768	33.1796860220005	-0.589054511019458	0.118474530808957	precentral (51.34%, 46.85%)	postcentral (27.48%, 29.37%)	paracentral (20.22%, 51.55%)
+age_child_mri_f09	2	4194	33.9039415145185	-0.409852565031252	0.0971282395833111	superiorparietal (48.55%, 19.92%)	precuneus (30.02%, 15.79%)	cuneus (16.57%, 42.43%)
+age_child_mri_f09	3	2075	33.2124505439404	-0.386377556453268	0.0899234294532293	lateraloccipital (59.08%, 20.56%)	lingual (31.42%, 16.74%)	fusiform (9.49%, 4.23%)
+age_child_mri_f09	4	1302	33.164212084105	-0.718227023971246	0.176555050579908	superiorfrontal (81.80%, 8.97%)	rostralmiddlefrontal (8.83%, 1.46%)	frontalpole (8.06%, 28.46%)
+age_child_mri_f09	5	2058	32.3061268578292	0.473554719641327	0.129642354090951	insula (51.21%, 20.71%)	superiortemporal (45.04%, 13.50%)	temporalpole (3.74%, 9.42%)
+age_child_mri_f09	6	681	34.1108059516018	0.439272824888187	0.11997017921899	parahippocampal (82.97%, 32.43%)	fusiform (16.45%, 2.40%)	entorhinal (0.59%, 0.44%)
+sex2	1	69649	33.2142214273598	-0.763458174344453	0.142406257091378	inferiorparietal (11.77%, 84.74%)	precentral (9.26%, 60.27%)	superiorparietal (9.17%, 62.48%)
+sex2	2	2765	33.4073469909348	-0.767344769517509	0.158304416281836	superiorfrontal (36.09%, 8.40%)	caudalanteriorcingulate (33.42%, 57.46%)	posteriorcingulate (19.53%, 18.04%)
+sex2	3	2020	33.5534335849566	-0.747248989963295	0.146036327180296	medialorbitofrontal (61.98%, 44.70%)	lateralorbitofrontal (38.02%, 17.64%)	NA
+sex2	4	910	32.4484571549081	-0.654318607442982	0.163673778729779	superiorfrontal (67.47%, 5.17%)	caudalmiddlefrontal (32.53%, 8.47%)	NA
+sex2	5	915	33.736873005142	-0.608044753602294	0.15743934670107	superiorfrontal (100%, 7.7%)	NA	NA
+sex2	6	448	34.0227409446696	-0.562861662291523	0.150695823232776	precentral (100%, 4.18%)	NA	NA

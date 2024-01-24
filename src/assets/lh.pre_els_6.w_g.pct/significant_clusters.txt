@@ -1,0 +1,19 @@
+variable	cluster	n_vertices	mean_w_g.pct	mean_coefficient	mean_se	top_region1	top_region2	top_region3
+(Intercept)	1	146210	32.6842260328262	37.1089708545581	1.30260305305641	superiorfrontal (8.33%, 100%)	precentral (7.35%, 100%)	superiorparietal (7.15%, 100%)
+pre_contextual_risk	1	1920	32.792055997756	-1.50925932448978	0.395504124322906	precentral (51.2%, 9.15%)	postcentral (48.8%, 9.84%)	NA
+pre_contextual_risk	2	1300	33.5439934252644	-1.30999109685421	0.335250870241569	lateralorbitofrontal (97%, 30.11%)	insula (3%, 0.75%)	NA
+pre_contextual_risk	3	955	33.2026897413279	-1.53320686742273	0.409840629456555	inferiortemporal (53.3%, 11.53%)	fusiform (46.7%, 9.46%)	NA
+pre_contextual_risk	4	807	31.2898498782076	-1.56741224618945	0.414275807518941	postcentral (98.14%, 8.32%)	supramarginal (1.86%, 0.17%)	NA
+pre_contextual_risk	5	765	31.3471529523212	-1.11993570631626	0.281743220137615	insula (86.54%, 12.66%)	superiortemporal (13.46%, 1.42%)	NA
+pre_contextual_risk	6	597	32.8786915952507	-1.30380024612449	0.34340603192847	lingual (70.18%, 9.96%)	parahippocampal (27.81%, 9.03%)	fusiform (2.01%, 0.25%)
+age_child_mri_f09	1	50689	32.7141549244306	-0.623378009172592	0.125482239214387	postcentral (15.32%, 81.58%)	precentral (14.34%, 67.66%)	superiorparietal (10.42%, 50.51%)
+age_child_mri_f09	2	5710	32.7947012537025	-0.458532777619132	0.0917450312831669	precuneus (35.34%, 27.61%)	pericalcarine (32.00%, 95.55%)	cuneus (20.47%, 71.72%)
+age_child_mri_f09	3	2160	32.333455020128	-0.619357423677489	0.159910515751	superiorfrontal (62.96%, 11.17%)	rostralmiddlefrontal (24.40%, 7.28%)	frontalpole (8.75%, 69.49%)
+age_child_mri_f09	4	1867	32.1853946346567	-0.491359966862438	0.135240785749634	rostralmiddlefrontal (59.72%, 15.39%)	caudalmiddlefrontal (39.53%, 19.75%)	parsopercularis (0.75%, 0.45%)
+age_child_mri_f09	5	951	33.5707434146246	-0.527061210821856	0.146532657206623	superiorfrontal (100%, 7.81%)	NA	NA
+age_child_mri_f09	6	486	33.9376205284469	-0.531189180573318	0.12973851675298	lateralorbitofrontal (54.73%, 6.35%)	medialorbitofrontal (45.27%, 8.29%)	NA
+sex2	1	63247	32.7107844806879	-0.673958082411337	0.138711835046653	precentral (9.79%, 57.68%)	postcentral (8.59%, 57.05%)	insula (6.37%, 77.07%)
+sex2	2	1421	32.5281633447774	-0.595968114520193	0.153437740718035	superiorfrontal (100%, 11.67%)	NA	NA
+sex2	3	1724	31.3246256775229	-0.804498431473763	0.1675379613194	caudalanteriorcingulate (47.80%, 57.26%)	superiorfrontal (31.38%, 4.44%)	posteriorcingulate (17.69%, 9.34%)
+sex2	4	778	32.3780238102064	-0.689765782543197	0.184149026142907	inferiorparietal (100%, 9.88%)	NA	NA
+sex2	5	480	32.7982498145482	-0.694213685579598	0.175424805982038	lateraloccipital (52.71%, 3.97%)	inferiorparietal (47.29%, 2.88%)	NA
