@@ -1,0 +1,6 @@
+.Rhistory
+.ipynb_checkpoints/
+.DS_Store
+src/callbacks/__pycache__/
+src/definitions/__pycache__/
+src/pages/__pycache__/
