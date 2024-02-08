@@ -29,13 +29,17 @@ def single_result_ui(start_model='els_global'):
         choices={'pial': 'Pial', 'infl': 'Inflated', 'flat': 'Flat'},
         selected='pial')
 
+    update_button = ui.div(ui.input_action_button(id='update_button',
+                                                  label='UPDATE',
+                                                  class_='btn btn-dark action-button'),
+                           style='padding-top: 15px')
+
     return ui.div(
         # Selection pane
-        ui.row(
-            ui.column(3, model_choice),
-            ui.column(3, term_choice),
-            ui.column(3, output_choice),
-            ui.column(3, surface_choice),
+        ui.layout_columns(
+            model_choice, term_choice, output_choice, surface_choice, update_button,
+            col_widths=(3, 3, 2, 2, 2),  # negative numbers for empty spaces
+            gap='80px',
             style=styles.SELECTION_PANE
         ),
         # Info
@@ -72,7 +76,8 @@ def update_single_result(input: Inputs, output: Outputs, session: Session) -> tu
                                                               term=input.select_term())
         return f'Mean beta value [range] = {mean_beta:.2f} [{min_beta:.2f}; {max_beta:.2f}]'
 
-    @reactive.calc
+    @reactive.Calc
+    @reactive.event(input.update_button, ignore_none=False)
     def brain3D():
         return plot_surfmap(model=input.select_model(),
                             term=input.select_term(),
@@ -120,7 +125,7 @@ def server(input, output, session):
     @output
     @render.text
     def value1():
-        return f'You selected {term1()} from {model1()}.'
+        return f'You selected {term1()} and {term2()}.'
 
 
 app = App(app_ui, server)
