@@ -1,7 +1,7 @@
 # from shiny import App, render, ui
 from shiny import App, Inputs, Outputs, Session, module, reactive, render, ui
 
-from shinywidgets import output_widget, render_widget, render_plotly
+from shinywidgets import output_widget, render_plotly
 
 
 import definitions.layout_styles as styles
