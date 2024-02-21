@@ -1,9 +1,64 @@
-library(haven)
 library(mice)
 library(dplyr)               
   
-els_brain <- readRDS(file.choose())
-# els_brain <- readRDS('/home/r095290/datin_ELS/scripts/els_brain.rds')
+# els_brain <- readRDS(file.choose())
+els_brain <- readRDS('../Data/ELS_brain.rds')
+
+# ============================================
+
+verbose_filter <- function(dataframe, ...) {
+  df <- dataframe
+  vars = as.list(substitute(list(...)))[-1L]
+  
+  m = 31 # for stacked (multiple imputation) datasets (else m=1)
+  
+  for(arg in vars) {
+    dataframe <- df
+    dataframe_new <- dataframe %>% filter(!!arg)
+    rows_filtered <- (nrow(df) - nrow(dataframe_new))/m
+    new_df_size <- nrow(dataframe_new)/m
+    cat(sprintf('Filtered out %s rows using: %s. New data size = %s\n', rows_filtered, deparse(arg), new_df_size))
+    df = dataframe_new
+  }
+  return(dataframe_new)
+}
+
+
+long.data <- mice::complete(els_brain, "long", include = TRUE) %>%
+
+   # Recode ethnicity 
+   mutate(ethnicity = if_else(is.na(ethn_cont), NA_character_,
+                      if_else(ethn_cont=="Dutch", "Dutch", 
+                      if_else(ethn_cont=="European", "other European", "non-European")))) %>%
+                      # NOTE: non-European = 'Indonesian','American, western','Asian, western','Oceanie','Cape Verdian','Moroccan','Dutch Antilles','Surinamese','Turkish','African','American, non western','Asian, non western'
+                      
+   # Filter data 
+   verbose_filter(mri_consent_f09 == "yes", t1_has_nii_f09 == "yes", t1_asset_has_nii_f09 != "exclude", 
+                  has_braces_mri_f09 == "no", exclude_incidental_f09 == "include", freesurfer_qc_f09 == "usable", qdec_has_lgi_f09 == "yes", 
+                  twin == 0, pre_percent_missing < 50, post_percent_missing < 50)  %>%
+   
+   # Rename some variables for easier reading
+   rename(., any_of(c(age = "age_child_mri_f09", 
+                      prenatal_smoking = "m_smoking", 
+                      prenatal_alcohol = "m_drinking", 
+                      mean_cortical_thickness_lh = "lh_MeanThickness_f09", 
+                      mean_cortical_thickness_rh = "rh_MeanThickness_f09")))
+   
+
+els_brain_sample$educ_m <- factor(els_brain_sample$data$educ_m, levels = c(0,1,2,3,4,5), labels = c("no_education","primary", "seconday, phase 1","secondary, phase 2", "higher, phase 1", "higher, phase 2")) 
+
+# Sex 
+els_brain_sample$sex <- with(els_brain_sample, factor(sex, levels = c(1,2), labels = c("male", "female")))
+
+# Checking output
+# table(long.data$ethn_cont, long.data$ethnicity, useNA="ifany")
+
+# check <- long.data %>%
+#    group_by(.imp) %>%
+#    summarize_at(c("ethnicity", "age"), function(x) sum(is.na(x)) )
+
+# Convert back to mids
+sample <- as.mids(long.data)
 
 select_sibling <- function(dt, column_selection = c(), random = T, seed = 31081996, mother_id = 'mother', child_id = 'IDC') {
   # if no selection is specified, missingness in the entire dataframe is used
@@ -25,59 +80,14 @@ select_sibling <- function(dt, column_selection = c(), random = T, seed = 310819
   return(sibling_ids)
 }
 
-imps <- readRDS('/home/r095290/datin_ELS/imputation_list_full.rds')
+sibs_to_include <- select_sibling(complete(els_brain, action=0))
 
-
-sibs_to_include <- select_sibling(complete(imps, action=0), random=T, mother_id='mother', child_id='IDC')
-
-els_brain <- readRDS('./els_brain.rds')
-els_brain_sample <- filter(els_brain,mri_consent_f09 == "yes")
-length(els_brain_sample$data$mri_consent_f09)
-
-els_brain_sample1 <- filter(els_brain_sample, t1_has_nii_f09 == "yes")
-length(els_brain_sample1$data$t1_has_nii_f09)
-
-els_brain_sample2 <- filter(els_brain_sample1, t1_asset_has_nii_f09 != "exclude")
-length(els_brain_sample2$data$t1_asset_has_nii_f09)
-
-els_brain_sample3 <- filter(els_brain_sample2, has_braces_mri_f09 == "no")
-length(els_brain_sample3$data$has_braces_mri_f09)
-
-els_brain_sample4 <- filter(els_brain_sample3, exclude_incidental_f09 == "include")
-length(els_brain_sample4$data$exclude_incidental_f09)
-
-els_brain_sample5 <- filter(els_brain_sample4, freesurfer_qc_f09 == "usable")
-length(els_brain_sample5$data$freesurfer_qc_f09)
-
-els_brain_sample6 <- filter(els_brain_sample5, qdec_has_lgi_f09 == "yes")
-length(els_brain_sample6$data$qdec_has_lgi_f09)
-
-els_brain_sample7 <- filter(els_brain_sample6, twin == 0)
-length(els_brain_sample7$data$twin)
 
 els_brain_sample8 <- filter(els_brain_sample7, !IDC %in% sibs_to_include)
 length(els_brain_sample8$data$IDC)
 
-els_brain_sample9 <- filter(els_brain_sample8, pre_percent_missing < 50)
-length(els_brain_sample9$data$IDC)
-
-els_brain_sample10 <- filter(els_brain_sample9, post_percent_missing < 50)
-length(els_brain_sample10$data$IDC)
-
-els_brain_sample11 <- filter(els_brain_sample10, !is.na(age_child_mri_f09 == "TRUE"))
-length(els_brain_sample11$data$IDC)
-
-els_brain_sample12 <- filter(els_brain_sample11, !is.na(ethn_cont == "TRUE"))
-length(els_brain_sample12$data$ethn_cont)
-
 ##########################################################
 #Descriptives
-
-#Ethnicity
-els_brain_sample12$data$ethninf_3gLab <- with(els_brain_sample12$data, factor( ifelse(ethn_cont == 'Dutch',  'Dutch', ifelse(ethn_cont %in% c('European'), 'other European', 'non-European' )))) # NOTE: non-European = 'Indonesian','American, western', 'Asian, western', 'Oceanie','Cape Verdian','Moroccan','Dutch Antilles','Surinamese','Turkish','African','American, non western','Asian, non western'
-table(els_brain_sample12$data$ethninf_3gLab)
-length(els_brain_sample12$data$ethn_cont)
-table(els_brain_sample12$data$ethn_cont)
 
 #Missing ELS scores 
 els_brain_sample12$nmis['post_life_events']
@@ -94,6 +104,17 @@ length(which(between(els_brain_sample12$data$post_percent_missing, 30, 40) == TR
 length(which(between(els_brain_sample12$data$post_percent_missing, 40, 50) == TRUE))
 length(which(between(els_brain_sample12$data$post_percent_missing, 50, 60) == TRUE))
 
+
+
+###########################################################################
+
+
+# Education
+
+saveRDS(els_brain_sample, '/home/r095290/datin_ELS/scripts/els_brain_sample.rds')
+
+#mother education 
+table(els_brain_sample12$data$educm)
 
 
 
