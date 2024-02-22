@@ -1,5 +1,5 @@
 library(mice)
-library(haven)
+library(foreign)
 
 # =========================================================
 # Setup 
@@ -22,13 +22,14 @@ cat('\nvols', dim(vols))
 brain <- merge(core, vols, by='idc', all.x=TRUE) # keep full cohort
 
 # Merge maternal education file containing more specific levels 
-educ_m <- haven::read_sav('/mnt/data/genr/users/rmuetzel/forDatin/qdecr/CHILD-ALLGENERALDATA_29012018.sav')[, c('IDC','EDUCM')]
+educ_m <- foreign::read.spss('/mnt/data/genr/users/rmuetzel/forDatin/qdecr/CHILD-ALLGENERALDATA_29012018.sav', 
+                             use.value.labels = TRUE, to.data.frame = TRUE)[, c('IDC','EDUCM')]
 names(educ_m) <- c("idc", "maternal_education")
 
 brain <- merge(brain, educ_m, by='idc', all.x=TRUE) # keep full cohort
 
 cat('\nMaternal education:\n')
-print(summary(as.factor(brain$maternal_education)))
+print(summary(brain$maternal_education))
 
 # Imputed ELS set
 imps <- readRDS(file.path(project_dir, 'Data/imputation_list_full.rds'))

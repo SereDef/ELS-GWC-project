@@ -1,46 +1,35 @@
-library(miceadds)
-library(dyplr)
-library(stringr)
-library(QDECR)
 
-project_dir <- "/home/r057600/datin_ELS"
+library(miceadds)
+library(QDECR)
+# require(TAM)
+
+# =========================================================
+# Setup 
+project_dir <- "/home/r057600/ELS_ICM"
 setwd(project_dir)
 
-sample <- readRDS(file.choose())
-# sample <- readRDS("els_brain_sample.rds")
+SUBJ_DIR <- "/mnt/data/genr/mrdata/GenR_MRI/bids/derivatives/freesurfer/6.0.0/qdecr"
+# FSHOME_DIR <- "/mnt/appl/tools/freesurfer/6.0.0"  # Set up globally 
 
-# Rename age variable and mean thickness variable?
-# -	Nonlinear (cut)  – 2 models (pre and post)
-# -	Puberty? --- to support prec development 
-# Sensitivity: 
-#   -	Sample selection 
+OUT_DIR <- file.path(project_dir,"QDECR_results_220224")
+
+# sample <- readRDS(file.choose())
+sample <- readRDS(file.path(project_dir, "Data/ELS_brain_sample.rds"))
 
 pren_domains <- c("pre_life_events","pre_contextual_risk","pre_parental_risk","pre_interpersonal_risk")
 post_domains <- c("post_life_events","post_contextual_risk","post_parental_risk","post_interpersonal_risk","post_direct_victimization")
 
 # Compute sample z-scores 
+cat('\nComputing z-scores...\n')
 var_list <- c("prenatal_stress", "postnatal_stress", pren_domains, post_domains)
 sample <- datlist2mids( scale_datlist( mids2datlist(sample), orig_var = var_list, trafo_var = paste0(var_list, "_z")))
 
-# Rename some variables for readability
-lookup <- c(age = "age_child_mri_f09", 
-            ethnicity = "ethninf_3gLab", 
-            prenatal_smoking = "m_smoking", 
-            prenatal_alcohol = "m_drinking", 
-            mean_cortical_thickness_lh = "lh_MeanThickness_f09", 
-            mean_cortical_thickness_rh = "rh_MeanThickness_f09")
 
-long.data <- complete(sample, "long", include = TRUE) %>%
-  # mutate(ethn_dich = if_else(ethn_cont %in% c("Dutch","Europe"), "European", "non-European")) %>%
-  rename(., any_of(lookup))
-# Convert back to mids
-sample <- as.mids(long.data)
-
-run_models <- function(analysis_name, 
-                       outcome = "qdecr_w_g.pct", 
-                       covariates = "+ age + sex + ethnicity + prenatal_smoking + prenatal_alcohol", 
-                       dataset=sample)
-  {
+# Main analysis function
+run_model <- function(analysis_name, 
+                      outcome = "qdecr_w_g.pct", 
+                      covariates = "+ age + sex + ethnicity + prenatal_smoking + prenatal_alcohol", 
+                      dataset=sample) {
   
   # Define model formula for all analyses
   if (analysis_name=="covariate_base") { 
@@ -61,7 +50,7 @@ run_models <- function(analysis_name,
   } else { exposure <- paste0(analysis_name,"_z") }
   
   # Formula
-  form <- as.formula(paste0(outcome, " ~ ", exposure, covariares))
+  form <- as.formula(paste0(outcome, " ~ ", exposure, covariates))
   
   # Run both hemispheres
   for (hemisf in c("rh","lh")) {
@@ -76,16 +65,20 @@ run_models <- function(analysis_name,
                       hemi = hemisf,
                       clobber = TRUE, # override analysis you have already done;
                       n_cores = 4,    # parallelization, by default maximum is 4 but can go up to 32
-                      dir_subj = "/mnt/data/genr/mrdata/GenR_MRI/bids/derivatives/freesurfer/6.0.0/", 
-                      dir_fshome = "/mnt/appl/tools/freesurfer/6.0.0",
-                      dir_tmp = paste0(project_dir,"/qdec_tmp"), # "/dev/shm", = shared memory
-                      dir_out = paste0(project_dir,"/qdec_results")) # folder for saving in the QdecR structure
+                      dir_subj = SUBJ_DIR, 
+                      # dir_fshome = FSHOME_DIR,
+                      dir_tmp = file.path(project_dir,"qdecr_tmp"), # "/dev/shm", = shared memory
+                      dir_out = OUT_DIR) # folder for saving in the QdecR structure
     
-    # Save model objet too
-    saveRDS(a, paste0(project_dir,"/qdec_results/",analysis_name,"_",hemisf,".rds"))
+    # Save model object too
+    # saveRDS(a, file.path(OUT_DIR,"all_models", paste0(analysis_name,"_",hemisf,".rds"))) 
   }
 }
 
+# -	Nonlinear (cut)  – 2 models (pre and post)
+# -	Puberty? --- to support prec development i put age interaction instead 
+# Sensitivity: 
+#   -	Sample selection 
 
 analyses_list <- c("covariate_base", 
                    
@@ -103,3 +96,4 @@ analyses_list <- c("covariate_base",
                    "postnatal_stress_by_ethnicity",
                    "postnatal_stress_ct_adjusted")
 
+for (model in analyses_list) { run_model(model) }
