@@ -1,5 +1,26 @@
 .Rhistory
 .ipynb_checkpoints/
 .DS_Store
+
+ELS_ICM_QDECR.log
+
 src_shiny_app/__pycache__/
 src_shiny_app/definitions/__pycache__/
+
+src_shiny_app/assets/results/*/*.rds
+src_shiny_app/assets/results/*/fwhm.dat
+src_shiny_app/assets/results/*/finalMask.mgh
+# src_shiny_app/assets/results/*/significant_clusters.txt
+
+src_shiny_app/assets/results/*/*.abs.sig.cluster.mgh
+src_shiny_app/assets/results/*/*.abs.sig.masked.mgh
+src_shiny_app/assets/results/*/*.abs.sig.voxel.mgh
+
+src_shiny_app/assets/results/*/*.abs.sig.cluster.summary
+src_shiny_app/assets/results/*/*.abs.sig.ocn.annot
+
+src_shiny_app/assets/results/*/stack*.t.mgh
+src_shiny_app/assets/results/*/stack*.p.mgh
+src_shiny_app/assets/results/*/stack*.se.mgh
+
+src_shiny_app/assets/results/*/stack*.label

@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
 
-resdir = './assets/results/'   # '/home/r095290/datin_ELS/scripts/postnatal_els_results/'
+resdir = './assets/results/'
 
 
 def detect_models(resdir=resdir):

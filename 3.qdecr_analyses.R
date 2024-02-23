@@ -9,7 +9,10 @@ project_dir <- "/home/r057600/ELS_ICM"
 setwd(project_dir)
 
 SUBJ_DIR <- "/mnt/data/genr/mrdata/GenR_MRI/bids/derivatives/freesurfer/6.0.0/qdecr"
-# FSHOME_DIR <- "/mnt/appl/tools/freesurfer/6.0.0"  # Set up globally 
+FSHOME_DIR <- "/mnt/appl/tools/freesurfer/6.0.0"  # or set up globally 
+
+cat("\nEnviroment checks:\n", Sys.getenv("FREESURFER_HOME"))
+                      # "\n", Sys.getenv("SUBJECTS_DIR"))
 
 OUT_DIR <- file.path(project_dir,"QDECR_results_220224")
 
@@ -66,7 +69,7 @@ run_model <- function(analysis_name,
                       clobber = TRUE, # override analysis you have already done;
                       n_cores = 4,    # parallelization, by default maximum is 4 but can go up to 32
                       dir_subj = SUBJ_DIR, 
-                      # dir_fshome = FSHOME_DIR,
+                      dir_fshome = FSHOME_DIR,
                       dir_tmp = file.path(project_dir,"qdecr_tmp"), # "/dev/shm", = shared memory
                       dir_out = OUT_DIR) # folder for saving in the QdecR structure
     
