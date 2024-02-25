@@ -5,7 +5,7 @@ from shinywidgets import output_widget, render_plotly
 
 
 import definitions.layout_styles as styles
-from definitions.backend_funcs import detect_models, detect_terms, extract_results, plot_surfmap
+from definitions.backend_funcs import detect_models, detect_terms, extract_results, plot_surfmap, plot_overlap
 
 @module.ui
 def single_result_ui(start_model='els_global'):
@@ -29,6 +29,12 @@ def single_result_ui(start_model='els_global'):
         choices={'pial': 'Pial', 'infl': 'Inflated', 'flat': 'Flat'},
         selected='pial')
 
+    resolution_choice = ui.input_selectize(
+        id='select_resolution',
+        label='Resolution',
+        choices={'fsaverage': 'High (164k nodes)', 'fsaverage6': 'Medium (50k nodes)', 'fsaverage5': 'Low (10k modes)'},
+        selected='fsaverage6')
+
     update_button = ui.div(ui.input_action_button(id='update_button',
                                                   label='UPDATE',
                                                   class_='btn btn-dark action-button'),
@@ -37,9 +43,9 @@ def single_result_ui(start_model='els_global'):
     return ui.div(
         # Selection pane
         ui.layout_columns(
-            model_choice, term_choice, output_choice, surface_choice, update_button,
-            col_widths=(3, 3, 2, 2, 2),  # negative numbers for empty spaces
-            gap='80px',
+            model_choice, term_choice, output_choice, surface_choice, resolution_choice, update_button,
+            col_widths=(2, 2, 2, 2, 2, 2),  # negative numbers for empty spaces
+            gap='30px',
             style=styles.SELECTION_PANE
         ),
         # Info
@@ -82,13 +88,16 @@ def update_single_result(input: Inputs, output: Outputs, session: Session) -> tu
         return plot_surfmap(model=input.select_model(),
                             term=input.select_term(),
                             surf=input.select_surface(),
+                            resol=input.select_resolution(),
                             output=input.select_output())
     @render_plotly
+    @reactive.event(input.update_button, ignore_none=False)
     def brain_left():
         brain = brain3D()
         return brain['left']
 
     @render_plotly
+    @reactive.event(input.update_button, ignore_none=False)
     def brain_right():
         brain = brain3D()
         return brain['right']
@@ -97,21 +106,65 @@ def update_single_result(input: Inputs, output: Outputs, session: Session) -> tu
 
 
 # ------------------------------------------------------------------------------
+overlap_page = ui.div(
+        # Selection pane
+        ui.layout_columns(
+            ui.input_selectize(
+                id='overlap_select_surface',
+                label='Surface type',
+                choices={'pial': 'Pial', 'infl': 'Inflated', 'flat': 'Flat'},
+                selected='pial'),
+            ui.input_selectize(
+                id='overlap_select_resolution',
+                label='Resolution',
+                choices={'fsaverage': 'High (164k nodes)', 'fsaverage6': 'Medium (50k nodes)', 'fsaverage5': 'Low (10k modes)'},
+                selected='fsaverage6'),
+
+            ui.div(' ', style='padding-top: 80px'),
+
+            col_widths=(3, 3, 2),  # negative numbers for empty spaces
+            gap='30px',
+            style=styles.SELECTION_PANE
+        ),
+        # Info
+        ui.row(
+            ui.output_text('overlap_info'),
+            style=styles.INFO_MESSAGE
+        ),
+        # Brain plots
+        ui.layout_columns(
+            ui.card('Left hemisphere',
+                    output_widget('overlap_brain_left'),
+                    full_screen=True),  # expand icon appears when hovering over the card body
+            ui.card('Right hemisphere',
+                    output_widget('overlap_brain_right'),
+                    full_screen=True)
+        ))
+# ------------------------------------------------------------------------------
 
 app_ui = ui.page_fillable(
-    ui.panel_title("BrainMApp: early-life stress and intra-cortical myelination"),
-    single_result_ui('result1', start_model='els_global'),
-    single_result_ui('result2', start_model='pre_els_global'),
-
-    ui.output_text('value1'),
-    # ui.row(
-    #     ui.column(3, ui.input_selectize(id='select_overlap_surface',
-    #                                     label='Surface type',
-    #                                     choices={'pial': 'Pial', 'infl': 'Inflated', 'flat': 'Flat'},
-    #                                     selected='pial')),
-    #     style=styles.SELECTION_PANE
-    # ),
-    # brain_plots('plots3'),
+    ui.page_navbar(
+        ui.nav_spacer(),
+        ui.nav_panel('Main results',
+                     'Welcome to BrainMApp',  # Spacer - fix with padding later or also never
+                     single_result_ui('result1', start_model='els_global'),
+                     single_result_ui('result2', start_model='pre_els_global'),
+                     ' ',  # Spacer
+                     value='tab1'
+                     ),
+        ui.nav_panel('Overlap',
+                     'Welcome to BrainMApp',  # Spacer - fix with padding later or also never
+                     overlap_page,
+                     ' ',  # spacer
+                     value='tab2'
+                     ),
+        title="BrainMApp: early-life stress and intra-cortical myelination",
+        selected='tab1',
+        position='fixed-top',
+        fillable=True,
+        bg='white',
+        window_title='BrainMApp',
+        id='navbar'),
 
     padding=styles.PAGE_PADDING,
     gap=styles.PAGE_GAP,
@@ -124,8 +177,27 @@ def server(input, output, session):
 
     @output
     @render.text
-    def value1():
-        return f'You selected {term1()} and {term2()}.'
+    def overlap_info():
+        return f'You selected {term1()} (from {model1()} model) and {term2()} (from {model2()} model).'
+
+    @reactive.Calc
+    def overlap_brain3D():
+        return plot_overlap(model1=model1(),
+                            term1=term1(),
+                            model2=model2(),
+                            term2=term2(),
+                            surf=input.overlap_select_surface(),
+                            resol=input.overlap_select_resolution())
+
+    @render_plotly
+    def overlap_brain_left():
+        brain = overlap_brain3D()
+        return brain['left']
+
+    @render_plotly
+    def overlap_brain_right():
+        brain = overlap_brain3D()
+        return brain['right']
 
 
 app = App(app_ui, server)

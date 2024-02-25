@@ -22,17 +22,15 @@ def detect_models(resdir=resdir):
 
 
 def detect_terms(model, mode='list', resdir=resdir):
-    l_mdir = f'{resdir}lh.{model}.w_g.pct'
-    r_mdir = f'{resdir}rh.{model}.w_g.pct'
+    l_mdir, r_mdir = [f'{resdir}{h}h.{model}.w_g.pct' for h in ['l', 'r']]
 
-    l_stacks = pd.read_table(l_mdir + '/stack_names.txt', delimiter="\t")
-    r_stacks = pd.read_table(r_mdir + '/stack_names.txt', delimiter="\t")
+    l_stacks, r_stacks = [pd.read_table(f'{mdir}/stack_names.txt', delimiter="\t") for mdir in [l_mdir, r_mdir]]
 
     if not l_stacks.equals(r_stacks):
-        print("ATTENTION: different models for left and right hemisphere")
+        print("ATTENTION: different models for left and right hemisphere")  # Happens with mean thickness
 
     if mode == 'list':
-        return list(l_stacks.stack_name)[1:]
+        return list(l_stacks.stack_name)[1:]  # Ignore intercept
     else:
         return l_stacks, l_mdir, r_mdir
 
@@ -52,11 +50,11 @@ def extract_results(model, term, thr='30'):
 
     for h, mdir in enumerate([l_mdir, r_mdir]):
         # Read significant cluster map
-        ocn = nb.load(mdir + f'/stack{stack}.cache.th{thr}.abs.sig.ocn.mgh')
+        ocn = nb.load(f'{mdir}/stack{stack}.cache.th{thr}.abs.sig.ocn.mgh')
         sign_clusters = np.array(ocn.dataobj).flatten()
 
         # Read beta map
-        coef = nb.load(mdir + f'/stack{stack}.coef.mgh')
+        coef = nb.load(f'{mdir}/stack{stack}.coef.mgh')
         betas = np.array(coef.dataobj).flatten()
         # Set non-significant betas to NA
         mask = np.where(sign_clusters == 0)[0]
@@ -75,15 +73,22 @@ def extract_results(model, term, thr='30'):
 
 # ===== PLOTTING FUNCTIONS ================================
 
-fsaverage = datasets.fetch_surf_fsaverage(mesh='fsaverage')
+def fetch_surface(resolution):
+    return datasets.fetch_surf_fsaverage(mesh=resolution)
 
 
 def plot_surfmap(model,
                  term,
                  surf,  # 'pial', 'infl', 'flat', 'sphere'
+                 resol='fsaverage6',
                  output='betas'):
 
     min_beta, max_beta, mean_beta, sign_clusters, sign_betas = extract_results(model, term)
+
+    fs_avg = fetch_surface(resol)
+    resol_cutpoints = {'fsaverage': 163842,
+                       'fsaverage6': 40962,
+                       'fsaverage5': 10242}
 
     brain3D = {}
 
@@ -107,9 +112,9 @@ def plot_surfmap(model,
             cmap = 'viridis'
 
         brain3D[hemi] = plotting.plot_surf(
-                surf_mesh=fsaverage[f'{surf}_{hemi}'],  # Surface mesh geometry
-                surf_map=stats_map,  # Statistical map
-                bg_map=fsaverage[f'sulc_{hemi}'],  # alpha=.2, only in matplotlib
+                surf_mesh=fs_avg[f'{surf}_{hemi}'],  # Surface mesh geometry
+                surf_map=stats_map[:resol_cutpoints[resol]],  # Statistical map
+                bg_map=fs_avg[f'sulc_{hemi}'],  # alpha=.2, only in matplotlib
                 darkness=0.7,
                 hemi=hemi,
                 view='lateral',
@@ -129,58 +134,45 @@ def plot_surfmap(model,
 
 # -------------------------------------------------
 
-def plot_overlap(model1, term1,
-                 model2, term2,
-                 surf='pial',  # flat, infl, pial, sphere
-                 view='lateral'):
-    out = {}
+def plot_overlap(model1, term1, model2, term2, surf='pial', resol='fsaverage6'):
+
+    sign_clusters1 = extract_results(model1, term1)[3]
+    sign_clusters2 = extract_results(model2, term2)[3]
+
+    fs_avg = fetch_surface(resol)
+    resol_cutpoints = {'fsaverage': 163842,
+                       'fsaverage6': 40962,
+                       'fsaverage5': 10242}
+
+    cmap = ListedColormap(['r', 'g', 'b'])
+
+    brain3D = {}
+
     for hemi in ['left', 'right']:
-        # Directory
-        hm = hemi[0] + 'h.'
 
-        if model1 == model2:
-            mdir1 = mdir2 = resdir + hm + model1
-            # Read in term names
-            stacks1 = stacks2 = pd.read_table(mdir1 + '/stack_names.txt', delimiter="\t")
-        else:
-            mdir1 = resdir + hm + model1
-            mdir2 = resdir + hm + model2
-            # Read in term names
-            stacks1 = pd.read_table(mdir1 + '/stack_names.txt', delimiter="\t")
-            stacks2 = pd.read_table(mdir2 + '/stack_names.txt', delimiter="\t")
-
-        stack1 = stacks1.loc[stacks1.stack_name == term1, 'stack_number'].iloc[0]
-        stack2 = stacks2.loc[stacks2.stack_name == term2, 'stack_number'].iloc[0]
-
-        ocn1 = nb.load(mdir1 + f'/stack{stack1}.cache.th30.abs.sig.ocn.mgh')
-        ocn2 = nb.load(mdir2 + f'/stack{stack2}.cache.th30.abs.sig.ocn.mgh')
-
-        sign1 = np.array(ocn1.dataobj).flatten()
-        sign2 = np.array(ocn2.dataobj).flatten()
+        sign1, sign2 = sign_clusters1[hemi], sign_clusters2[hemi]
 
         sign1[sign1 > 0] = 1
         sign2[sign2 > 0] = 2
-        ovlp = np.sum([sign1, sign2], axis=0)
 
-        # cmap = plt.get_cmap('Paired', 3)
-        cmap = ListedColormap(['r', 'g', 'b'])
+        ovlp_map = np.sum([sign1, sign2], axis=0)
 
-        out[hemi] = plotting.plot_surf(
-            surf_mesh=fsaverage[f'{surf}_{hemi}'],  # Surface mesh geometry
-            surf_map=ovlp,  # Statistical map
-            bg_map=fsaverage[f'sulc_{hemi}'],  # alpha=.2, only in matplotlib
+        brain3D[hemi] = plotting.plot_surf(
+            surf_mesh=fs_avg[f'{surf}_{hemi}'],  # Surface mesh geometry
+            surf_map=ovlp_map[:resol_cutpoints[resol]],  # Statistical map
+            bg_map=fs_avg[f'sulc_{hemi}'],  # alpha=.2, only in matplotlib
             darkness=0.7,
             hemi=hemi,
-            view=view,
+            view='lateral',
             engine='plotly',  # or matplolib # axes=axs[0] # only for matplotlib
             cmap=cmap,
             symmetric_cmap=False,
             colorbar=True,
             vmin=1, vmax=3,
             cbar_vmin=1, cbar_vmax=3,
-            title=f'{hemi} hemisphere',
-            title_font_size=20,
+            # title=f'{hemi} hemisphere',
+            # title_font_size=20,
             threshold=1
-        )
+        ).figure
 
-    return out
+    return brain3D
