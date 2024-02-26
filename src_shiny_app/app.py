@@ -136,7 +136,7 @@ overlap_page = ui.div(
         ),
         # Info
         ui.row(
-            ui.output_text('overlap_info'),
+            ui.output_ui('overlap_info'),
             style=styles.INFO_MESSAGE
         ),
         # Brain plots
@@ -186,7 +186,11 @@ def server(input, output, session):
     @output
     @render.text
     def overlap_info():
-        return f'You selected {term1()} (from {model1()} model) and {term2()} (from {model2()} model).'
+        legend1 = f'<span style = "background-color: {styles.OVLP_COLOR1}; color: {styles.OVLP_COLOR1}"> oo</span>'
+        legend2 = f'<span style = "background-color: {styles.OVLP_COLOR2}; color: {styles.OVLP_COLOR2}"> oo</span>'
+        legend3 = f'<span style = "background-color: {styles.OVLP_COLOR3}; color: {styles.OVLP_COLOR3}"> oo</span>'
+        return ui.markdown(f'You selected {legend1}  **{term1()}** (from the <ins>{model1()}</ins> model) and '
+                           f'{legend2}  **{term2()}** (from the <ins>{model2()}</ins> model).</br>{legend3}  overlap')
 
     @reactive.Calc
     def overlap_brain3D():
