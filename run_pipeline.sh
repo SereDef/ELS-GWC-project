@@ -18,5 +18,5 @@ source $FREESURFER_HOME/SetUpFreeSurfer.sh
 # Run entire pipeline (or part of it)
 
 # Rscript 1.els_brain_merge.R
-# Rscript 2.clean_and_filter.R
+Rscript 2.clean_and_filter.R
 Rscript 3.qdecr_analyses.R

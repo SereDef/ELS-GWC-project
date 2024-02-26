@@ -24,16 +24,20 @@ verbose_filter <- function(dataframe, ...) {
 }
 
 
+
 long.data <- mice::complete(els_brain, "long", include = TRUE) %>%
 
    # Recode ethnicity 
    mutate(ethnicity = if_else(is.na(ethn_cont), NA_character_,
                       if_else(ethn_cont=="Dutch", "Dutch", 
                       if_else(ethn_cont=="European", "other European", "non-European"))),
-          sex = factor(sex, labels=c("Male", "Female"))
-                      ) %>%
                       # NOTE: non-European = 'Indonesian','American, western','Asian, western','Oceanie','Cape Verdian','Moroccan','Dutch Antilles','Surinamese','Turkish','African','American, non western','Asian, non western'
-                      
+          sex = factor(sex, labels=c("Male", "Female")),
+          postnatal_stress_cat = relevel(cut(postnatal_stress, quantile(postnatal_stress, na.rm=TRUE)[-3], include.lowest=TRUE, 
+                                            labels=c("Low","Medium","High")), ref="Medium"),
+          prenatal_stress_cat = relevel(cut(prenatal_stress, quantile(prenatal_stress, na.rm=TRUE)[-3], include.lowest=TRUE, 
+                                            labels=c("Low","Medium","High")), ref="Medium")) %>%
+                                            
    # Filter data 
    verbose_filter(mri_consent_f09 == "yes", t1_has_nii_f09 == "yes", t1_asset_has_nii_f09 != "exclude", 
                   has_braces_mri_f09 == "no", exclude_incidental_f09 == "include", freesurfer_qc_f09 == "usable", qdec_has_lgi_f09 == "yes", 
@@ -50,9 +54,10 @@ long.data <- mice::complete(els_brain, "long", include = TRUE) %>%
 # Check transformations and missing values 
 # table(long.data$ethn_cont, long.data$ethnicity, useNA="ifany")
 
-# check <- long.data %>%
-#    group_by(.imp) %>%
+# check <- long.data %>% group_by(.imp) %>%
+#    summarize_at(c("postnatal_stress_cat","prenatal_stress_cat"), summary)
 #    summarize_at(c("ethnicity", "age", "maternal_education"), function(x) sum(is.na(x)) )
+# print(check, n=31)
 
 # Subset siblings
 select_sibling <- function(dt, column_selection = c(), random = TRUE, seed = 31081996, mother_id = 'mother', child_id = 'IDC') {

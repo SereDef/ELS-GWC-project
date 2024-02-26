@@ -14,7 +14,7 @@ FSHOME_DIR <- "/mnt/appl/tools/freesurfer/6.0.0"  # or set up globally
 cat("\nEnviroment checks:\n", Sys.getenv("FREESURFER_HOME"))
                       # "\n", Sys.getenv("SUBJECTS_DIR"))
 
-OUT_DIR <- file.path(project_dir,"QDECR_results_220224")
+OUT_DIR <- file.path(project_dir,"QDECR_results_260224")
 
 # sample <- readRDS(file.choose())
 sample <- readRDS(file.path(project_dir, "Data/ELS_brain_sample.rds"))
@@ -39,8 +39,8 @@ run_model <- function(analysis_name,
     exposure <- ""
     covariates <- substr(covariates, 3, nchar(covariates)) # remove leading + 
   # all domains
-  } else if (analysis_name=="post_domains") { exposure <- paste0(paste(post_domains, collapse="_z + "),"_z") 
-  } else if (analysis_name=="pren_domains") { exposure <- paste0(paste(pren_domains, collapse="_z + "),"_z")
+  } else if (analysis_name=="postnatal_domains") { exposure <- paste0(paste(post_domains, collapse="_z + "),"_z") 
+  } else if (analysis_name=="prenatal_domains") { exposure <- paste0(paste(pren_domains, collapse="_z + "),"_z")
   # stratified analyses
   } else if (grepl( "_by_", analysis_name)) { interaction_list <- stringr::str_split(analysis_name, "_by_")[[1]]
    exposure <- paste(interaction_list, collapse="_z * ")
@@ -48,7 +48,8 @@ run_model <- function(analysis_name,
   # Adjusted for cortical thickness
   } else if (grepl( "_ct_adjusted", analysis_name)) { 
     exposure <- gsub("_ct_adjusted","_z",analysis_name)
-    covariates <- paste(covariates, "")
+  } else if (grepl("_nonlinear", analysis_name)) {
+    exposure <- gsub("_nonlinear","_cat",analysis_name)
   # simpler model
   } else { exposure <- paste0(analysis_name,"_z") }
   
@@ -59,7 +60,9 @@ run_model <- function(analysis_name,
   for (hemisf in c("rh","lh")) {
     
     if (grepl( "_ct_adjusted", analysis_name)) { 
-      covariates <- paste0(covariates, " + mean_cortical_thickness_", hemisf) }
+      covariates <- paste0(covariates, " + mean_cortical_thickness_", hemisf) 
+      form <- as.formula(paste0(outcome, " ~ ", exposure, covariates))
+    }
     
     a <- qdecr_fastlm(form, 
                       data = dataset, 
@@ -78,7 +81,6 @@ run_model <- function(analysis_name,
   }
 }
 
-# -	Nonlinear (cut)  – 2 models (pre and post)
 # -	Puberty? --- to support prec development i put age interaction instead 
 # Sensitivity: 
 #   -	Sample selection 
@@ -86,17 +88,19 @@ run_model <- function(analysis_name,
 analyses_list <- c("covariate_base", 
                    
                    "prenatal_stress",
-                   "pren_domains", pren_domains,
+                   "prenatal_domains", pren_domains,
                    "prenatal_stress_by_sex",
                    "prenatal_stress_by_age",
                    "prenatal_stress_by_ethnicity",
+                   "prenatal_stress_nonlinear",
                    "prenatal_stress_ct_adjusted",
                    
                    "postnatal_stress",
-                   "post_domains", post_domains,
+                   "postnatal_domains", post_domains,
                    "postnatal_stress_by_sex",
                    "postnatal_stress_by_age",
                    "postnatal_stress_by_ethnicity",
+                   "postnatal_stress_nonlinear",
                    "postnatal_stress_ct_adjusted")
 
 for (model in analyses_list) { run_model(model) }
