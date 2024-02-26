@@ -1,0 +1,13 @@
+stack_number	stack_name
+1	(Intercept)
+2	post_life_events_z
+3	post_contextual_risk_z
+4	post_parental_risk_z
+5	post_interpersonal_risk_z
+6	post_direct_victimization_z
+7	age
+8	sexFemale
+9	ethnicitynon-European
+10	ethnicityother European
+11	prenatal_smoking
+12	prenatal_alcohol

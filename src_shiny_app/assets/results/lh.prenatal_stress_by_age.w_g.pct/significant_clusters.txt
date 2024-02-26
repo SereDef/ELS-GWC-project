@@ -1,0 +1,14 @@
+variable	cluster	n_vertices	mean_w_g.pct	mean_coefficient	mean_se	top_region1	top_region2	top_region3
+(Intercept)	1	146190	32.7119619096008	36.7515338623586	1.25827481808362	superiorfrontal (8.33%, 100%)	precentral (7.35%, 100%)	superiorparietal (7.15%, 100%)
+age	1	28005	33.0350260054779	-0.566633050410029	0.11467664396682	lateraloccipital (17.25%, 75.72%)	inferiorparietal (15.55%, 55.33%)	superiorparietal (9.75%, 26.11%)
+age	2	22150	32.6666363273756	-0.646871333778846	0.119559668605268	precentral (32.58%, 67.20%)	postcentral (27.89%, 64.89%)	paracentral (12.67%, 85.19%)
+age	3	7429	32.2286300129851	-0.491494385093583	0.1133404026937	supramarginal (29.45%, 25.44%)	superiortemporal (21.39%, 21.85%)	postcentral (17.92%, 13.98%)
+age	4	2173	32.3445781417837	-0.609380176003716	0.155729405047073	superiorfrontal (61.34%, 10.95%)	rostralmiddlefrontal (26.42%, 7.92%)	frontalpole (8.70%, 69.49%)
+age	5	927	32.2062957009789	-0.532083928038516	0.142153255022588	rostralmiddlefrontal (100%, 12.8%)	NA	NA
+age	6	575	33.7742187315458	-0.517490340056627	0.124547895802104	lateralorbitofrontal (53.91%, 7.40%)	medialorbitofrontal (46.09%, 9.99%)	NA
+age	7	527	33.4342910799496	-0.493445959500615	0.137944988326737	superiorfrontal (100%, 4.33%)	NA	NA
+sexFemale	1	63675	32.7149542095694	-0.681163372527771	0.135786345228056	precentral (9.95%, 58.99%)	postcentral (8.93%, 59.73%)	insula (6.38%, 77.70%)
+sexFemale	2	2815	32.6500732153222	-0.686411549915852	0.172763510966809	superiorfrontal (54.14%, 12.51%)	rostralmiddlefrontal (38.65%, 15.02%)	caudalmiddlefrontal (7.21%, 5.43%)
+sexFemale	3	1356	32.6631041630435	-0.583973155744308	0.150274899812926	superiorfrontal (100%, 11.13%)	NA	NA
+ethnicitynon-European	1	3871	32.8239010607376	-0.692876039303356	0.178359901766865	precentral (43.40%, 15.64%)	postcentral (40.35%, 16.41%)	supramarginal (16.25%, 7.31%)
+ethnicitynon-European	2	1959	33.3098184708586	-0.816623797247518	0.205641533941746	middletemporal (59.72%, 26.28%)	bankssts (25.73%, 23.58%)	inferiortemporal (7.66%, 3.40%)

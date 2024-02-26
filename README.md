@@ -1,11 +1,10 @@
 # ELS-GWC-project
-Vertex-wise associations between early-life stress (ELS) exposure and gray-white matter boundary contrast (GWC) in early adolescence
+Vertex-wise associations between early-life stress (ELS) exposure during gestation and during childhood, and gray-white matter boundary contrast (GWC) in early adolescence.
 
 ## Analytical pipeline 
- - `1.els_brain_merge.R`: reads the imputed ELS data from Defina et al. (2023) and merges it with additional brain data
- - `2.sample_filter_and describe.R`: cleaning, sample selection and descriptives
- - `3.qdecr_loop.R`: main analyses (vertex-wise associations with each exposure of interest)
- - `4.qdecr_cortical_thickness.R`: additional analyses (ertex-wise associations with mean thickness)
+ - **`1.els_brain_merge.R`**: reads the imputed ELS data mids object [ imputation procedure described in Defina et al. (2023)] and merges it with the necessary neuroimaging metadata
+ - **`2.clean_and_filter.R`**: recode or rename variables, and perform sample selection
+ - **`3.qdecr_analyses.R`**: main analyses = vertex-wise associations between each ELS exposure of interest and GWC.
 
 ## 3D brain surface maps
 Interactive 3D brain surface maps representing the associations from this project can be visualized using this online application. 

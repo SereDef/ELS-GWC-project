@@ -1,8 +1,0 @@
-stack_number	stack_name
-1	(Intercept)
-2	pre_life_events
-3	pre_contextual_risk
-4	pre_parental_risk
-5	pre_interpersonal_risk
-6	age_child_mri_f09
-7	sex2

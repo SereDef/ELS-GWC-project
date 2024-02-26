@@ -1,0 +1,9 @@
+stack_number	stack_name
+1	(Intercept)
+2	pre_life_events_z
+3	age
+4	sexFemale
+5	ethnicitynon-European
+6	ethnicityother European
+7	prenatal_smoking
+8	prenatal_alcohol
