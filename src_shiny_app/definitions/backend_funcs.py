@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
+import warnings
 
 from nilearn import plotting, datasets
 import nibabel as nb
@@ -8,18 +9,20 @@ import nibabel as nb
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
+import definitions.layout_styles as styles
+
 # ===== DATA PROCESSING FUNCTIONS ==============================================================
 
 resdir = './assets/results/'
 
 
 def detect_models(resdir=resdir):
-    allmods = [x[0].split('/')[-1] for x in os.walk(resdir)][1:]
+    allmods = [x[0].split('/')[-1] for x in os.walk(resdir)][1:]  # assume all stored in resdir
 
     am_clean = list(set([x.split('.')[1] for x in allmods]))  # assume structure lh.name.measure
 
-    # Assume you have left and right hemispheres always
-    return am_clean
+    # Assume you have left and right hemispheres are always run
+    return sorted(am_clean)
 
 
 def detect_terms(model, mode='list', resdir=resdir):
@@ -45,6 +48,7 @@ def extract_results(model, term, thr='30'):
     min_beta = []
     max_beta = []
     med_beta = []
+    n_clusters = []
 
     sign_clusters_left_right = {}
     sign_betas_left_right = {}
@@ -54,22 +58,34 @@ def extract_results(model, term, thr='30'):
         ocn = nb.load(f'{mdir}/stack{stack}.cache.th{thr}.abs.sig.ocn.mgh')
         sign_clusters = np.array(ocn.dataobj).flatten()
 
-        # Read beta map
-        coef = nb.load(f'{mdir}/stack{stack}.coef.mgh')
-        betas = np.array(coef.dataobj).flatten()
-        # Set non-significant betas to NA
-        mask = np.where(sign_clusters == 0)[0]
-        betas[mask] = np.nan
+        if not np.any(sign_clusters):  # all zeros = no significant clusters
+            betas = np.empty(sign_clusters.shape)
+            betas.fill(np.nan)
+            n_clusters.append(0)
+        else:
+            # Read beta map
+            coef = nb.load(f'{mdir}/stack{stack}.coef.mgh')
+            betas = np.array(coef.dataobj).flatten()
 
-        min_beta.append(np.nanmin(betas))
-        max_beta.append(np.nanmax(betas))
-        med_beta.append(np.nanmean(betas))
+            # Set non-significant betas to NA
+            mask = np.where(sign_clusters == 0)[0]
+            betas[mask] = np.nan
+
+            n_clusters.append(np.max(sign_clusters))
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+
+            min_beta.append(np.nanmin(betas))
+            max_beta.append(np.nanmax(betas))
+            med_beta.append(np.nanmean(betas))
 
         hemi = 'left' if h == 0 else 'right'
         sign_clusters_left_right[hemi] = sign_clusters
         sign_betas_left_right[hemi] = betas
 
-    return np.min(min_beta), np.max(max_beta), np.mean(med_beta), sign_clusters_left_right, sign_betas_left_right
+    return np.nanmin(min_beta), np.nanmax(max_beta), np.nanmean(med_beta), n_clusters, \
+           sign_clusters_left_right, sign_betas_left_right
 
 
 # ===== PLOTTING FUNCTIONS ===================================================================
@@ -84,13 +100,14 @@ def fetch_surface(resolution):
 
 # ---------------------------------------------------------------------------------------------
 
+
 def plot_surfmap(model,
                  term,
                  surf='pial',  # 'pial', 'infl', 'flat', 'sphere'
                  resol='fsaverage6',
                  output='betas'):
 
-    min_beta, max_beta, mean_beta, sign_clusters, sign_betas = extract_results(model, term)
+    min_beta, max_beta, mean_beta, n_clusters, sign_clusters, sign_betas = extract_results(model, term)
 
     fs_avg, n_nodes = fetch_surface(resol)
 
@@ -101,19 +118,25 @@ def plot_surfmap(model,
         if output == 'clusters':
             stats_map = sign_clusters[hemi]
 
-            max_val = int(np.nanmax(stats_map))
+            max_val = int(np.nanmax(n_clusters))
             min_val = thresh = 1
 
-            cmap = plt.get_cmap('Paired', max_val)
+            cmap = plt.get_cmap(styles.CLUSTER_COLORMAP, max_val)
 
         else:
             stats_map = sign_betas[hemi]
 
             max_val = max_beta
             min_val = min_beta
-            thresh = np.nanmin(abs(stats_map))
 
-            cmap = 'viridis'
+            if max_val < 0 and min_val < 0:  # all negative associations
+                thresh = max_val
+            elif max_val > 0 and min_val > 0:  # all positive associations
+                thresh = min_val
+            else:
+                thresh = np.nanmin(abs(stats_map))
+
+            cmap = styles.BETA_COLORMAP
 
         brain3D[hemi] = plotting.plot_surf(
                 surf_mesh=fs_avg[f'{surf}_{hemi}'],  # Surface mesh geometry
@@ -138,14 +161,15 @@ def plot_surfmap(model,
 
 # ---------------------------------------------------------------------------------------------
 
+
 def plot_overlap(model1, term1, model2, term2, surf='pial', resol='fsaverage6'):
 
-    sign_clusters1 = extract_results(model1, term1)[3]
-    sign_clusters2 = extract_results(model2, term2)[3]
+    sign_clusters1 = extract_results(model1, term1)[4]
+    sign_clusters2 = extract_results(model2, term2)[4]
 
     fs_avg, n_nodes = fetch_surface(resol)
 
-    cmap = ListedColormap(['r', 'g', 'b'])
+    cmap = ListedColormap([styles.OVLP_COLOR1, styles.OVLP_COLOR2, styles.OVLP_COLOR3])
 
     brain3D = {}
 

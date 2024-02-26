@@ -8,7 +8,7 @@ import definitions.layout_styles as styles
 from definitions.backend_funcs import detect_models, detect_terms, extract_results, plot_surfmap, plot_overlap
 
 @module.ui
-def single_result_ui(start_model='els_global'):
+def single_result_ui(start_model='postnatal_stress'):
     model_choice = ui.input_selectize(
         id='select_model',
         label='Choose model',
@@ -43,14 +43,17 @@ def single_result_ui(start_model='els_global'):
     return ui.div(
         # Selection pane
         ui.layout_columns(
-            model_choice, term_choice, output_choice, surface_choice, resolution_choice, update_button,
-            col_widths=(2, 2, 2, 2, 2, 2),  # negative numbers for empty spaces
-            gap='30px',
-            style=styles.SELECTION_PANE
+            ui.layout_columns(
+                model_choice, term_choice, output_choice, surface_choice, resolution_choice,
+                col_widths=(3, 3, 2, 2, 2),  # negative numbers for empty spaces
+                gap='30px',
+                style=styles.SELECTION_PANE),
+            update_button,
+            col_widths=(11, 1)
         ),
         # Info
         ui.row(
-            ui.output_text('info'),
+            ui.output_ui('info'),
             style=styles.INFO_MESSAGE
         ),
         # Brain plots
@@ -78,9 +81,14 @@ def update_single_result(input: Inputs, output: Outputs, session: Session) -> tu
 
     @render.text
     def info():
-        min_beta, max_beta, mean_beta, _, _ = extract_results(model=input.select_model(),
-                                                              term=input.select_term())
-        return f'Mean beta value [range] = {mean_beta:.2f} [{min_beta:.2f}; {max_beta:.2f}]'
+        min_beta, max_beta, mean_beta, n_clusters, _, _ = extract_results(model=input.select_model(),
+                                                                          term=input.select_term())
+        l_nc = int(n_clusters[0])
+        r_nc = int(n_clusters[1])
+
+        return ui.markdown(
+            f'**{l_nc+r_nc}** clusters identified ({l_nc} in the left and {r_nc} in the right hemishpere).<br />'
+            f'Mean beta value [range] = **{mean_beta:.2f}** [{min_beta:.2f}; {max_beta:.2f}]')
 
     @reactive.Calc
     @reactive.event(input.update_button, ignore_none=False)
@@ -147,8 +155,8 @@ app_ui = ui.page_fillable(
         ui.nav_spacer(),
         ui.nav_panel('Main results',
                      'Welcome to BrainMApp',  # Spacer - fix with padding later or also never
-                     single_result_ui('result1', start_model='els_global'),
-                     single_result_ui('result2', start_model='pre_els_global'),
+                     single_result_ui('result1', start_model='postnatal_stress'),
+                     single_result_ui('result2', start_model='prenatal_stress'),
                      ' ',  # Spacer
                      value='tab1'
                      ),
