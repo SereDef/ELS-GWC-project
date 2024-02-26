@@ -6,6 +6,8 @@ ELS_ICM_QDECR.log
 
 src_shiny_app/__pycache__/
 src_shiny_app/definitions/__pycache__/
+src_shiny_app/check_app_content.ipynb
+src_shiny_app/.ipynb_checkpoints/
 
 src_shiny_app/assets/results/*/*.rds
 src_shiny_app/assets/results/*/fwhm.dat
