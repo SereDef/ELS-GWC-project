@@ -8,6 +8,7 @@ import nibabel as nb
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
+# ===== DATA PROCESSING FUNCTIONS ==============================================================
 
 resdir = './assets/results/'
 
@@ -71,24 +72,27 @@ def extract_results(model, term, thr='30'):
     return np.min(min_beta), np.max(max_beta), np.mean(med_beta), sign_clusters_left_right, sign_betas_left_right
 
 
-# ===== PLOTTING FUNCTIONS ================================
+# ===== PLOTTING FUNCTIONS ===================================================================
 
 def fetch_surface(resolution):
-    return datasets.fetch_surf_fsaverage(mesh=resolution)
+    # Size / number of nodes per map
+    n_nodes = {'fsaverage': 163842,
+               'fsaverage6': 40962,
+               'fsaverage5': 10242}
 
+    return datasets.fetch_surf_fsaverage(mesh=resolution), n_nodes[resolution]
+
+# ---------------------------------------------------------------------------------------------
 
 def plot_surfmap(model,
                  term,
-                 surf,  # 'pial', 'infl', 'flat', 'sphere'
+                 surf='pial',  # 'pial', 'infl', 'flat', 'sphere'
                  resol='fsaverage6',
                  output='betas'):
 
     min_beta, max_beta, mean_beta, sign_clusters, sign_betas = extract_results(model, term)
 
-    fs_avg = fetch_surface(resol)
-    resol_cutpoints = {'fsaverage': 163842,
-                       'fsaverage6': 40962,
-                       'fsaverage5': 10242}
+    fs_avg, n_nodes = fetch_surface(resol)
 
     brain3D = {}
 
@@ -113,7 +117,7 @@ def plot_surfmap(model,
 
         brain3D[hemi] = plotting.plot_surf(
                 surf_mesh=fs_avg[f'{surf}_{hemi}'],  # Surface mesh geometry
-                surf_map=stats_map[:resol_cutpoints[resol]],  # Statistical map
+                surf_map=stats_map[:n_nodes],  # Statistical map
                 bg_map=fs_avg[f'sulc_{hemi}'],  # alpha=.2, only in matplotlib
                 darkness=0.7,
                 hemi=hemi,
@@ -132,17 +136,14 @@ def plot_surfmap(model,
 
     return brain3D
 
-# -------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 
 def plot_overlap(model1, term1, model2, term2, surf='pial', resol='fsaverage6'):
 
     sign_clusters1 = extract_results(model1, term1)[3]
     sign_clusters2 = extract_results(model2, term2)[3]
 
-    fs_avg = fetch_surface(resol)
-    resol_cutpoints = {'fsaverage': 163842,
-                       'fsaverage6': 40962,
-                       'fsaverage5': 10242}
+    fs_avg, n_nodes = fetch_surface(resol)
 
     cmap = ListedColormap(['r', 'g', 'b'])
 
@@ -159,7 +160,7 @@ def plot_overlap(model1, term1, model2, term2, surf='pial', resol='fsaverage6'):
 
         brain3D[hemi] = plotting.plot_surf(
             surf_mesh=fs_avg[f'{surf}_{hemi}'],  # Surface mesh geometry
-            surf_map=ovlp_map[:resol_cutpoints[resol]],  # Statistical map
+            surf_map=ovlp_map[:n_nodes],  # Statistical map
             bg_map=fs_avg[f'sulc_{hemi}'],  # alpha=.2, only in matplotlib
             darkness=0.7,
             hemi=hemi,
