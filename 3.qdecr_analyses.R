@@ -47,9 +47,12 @@ run_model <- function(analysis_name,
    covariates <- gsub(paste(" +", interaction_list[2]), "", covariates, fixed=TRUE)
   # Adjusted for cortical thickness
   } else if (grepl( "_ct_adjusted", analysis_name)) { 
-    exposure <- gsub("_ct_adjusted","_z",analysis_name)
+    exposure <- gsub("_ct_adjusted","_z", analysis_name)
+  } else if (grepl( "_min_adjusted", analysis_name)) { 
+    exposure <- gsub("_min_adjusted","_z", analysis_name)
+    covariates <- "+ age + sex"
   } else if (grepl("_nonlinear", analysis_name)) {
-    exposure <- gsub("_nonlinear","_cat",analysis_name)
+    exposure <- gsub("_nonlinear","_cat", analysis_name)
   # simpler model
   } else { exposure <- paste0(analysis_name,"_z") }
   
@@ -85,14 +88,17 @@ run_model <- function(analysis_name,
 # Sensitivity: 
 #   -	Sample selection 
 
-analyses_list <- c("covariate_base", 
+analyses_list <- c(#"covariate_base", 
                    
-                   "prenatal_stress",
-                   "prenatal_domains", pren_domains,
-                   "prenatal_stress_by_sex",
-                   "prenatal_stress_by_age",
+                  # "prenatal_stress",
+                  # "prenatal_domains", pren_domains,
+                  # "prenatal_stress_by_sex",
+                  # "prenatal_stress_by_age",  
+                  # Error in unserialize(socklist[[n]]) : error reading from connection
+                  # at this point some slurm worker died, rip 
                    "prenatal_stress_by_ethnicity",
                    "prenatal_stress_nonlinear",
+                   "prenatal_stress_min_adjusted",
                    "prenatal_stress_ct_adjusted",
                    
                    "postnatal_stress",
@@ -101,6 +107,9 @@ analyses_list <- c("covariate_base",
                    "postnatal_stress_by_age",
                    "postnatal_stress_by_ethnicity",
                    "postnatal_stress_nonlinear",
+                   "postnatal_stress_min_adjusted",
                    "postnatal_stress_ct_adjusted")
 
 for (model in analyses_list) { run_model(model) }
+
+warnings()

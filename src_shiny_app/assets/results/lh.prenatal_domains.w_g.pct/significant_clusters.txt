@@ -1,0 +1,14 @@
+variable	cluster	n_vertices	mean_w_g.pct	mean_coefficient	mean_se	top_region1	top_region2	top_region3
+(Intercept)	1	146190	32.7090362466033	36.8265123143031	1.26053218853417	superiorfrontal (8.33%, 100%)	precentral (7.35%, 100%)	superiorparietal (7.15%, 100%)
+age	1	28685	33.0385265881863	-0.571494035824616	0.115221406139417	lateraloccipital (16.91%, 76.03%)	inferiorparietal (15.76%, 57.43%)	superiorparietal (9.52%, 26.13%)
+age	2	23149	32.6762882740536	-0.645793088360777	0.120522211945682	precentral (31.25%, 67.35%)	postcentral (26.79%, 65.15%)	paracentral (12.14%, 85.34%)
+age	3	7643	32.2320710266035	-0.498802979263385	0.113647015854262	supramarginal (29.77%, 26.45%)	superiortemporal (21.33%, 22.42%)	postcentral (17.58%, 14.12%)
+age	4	2374	32.3555980322153	-0.611267321370385	0.154856621349747	superiorfrontal (62.38%, 12.16%)	rostralmiddlefrontal (26.03%, 8.53%)	frontalpole (8.13%, 70.96%)
+age	5	984	32.0749864218298	-0.534396582744955	0.142525253673576	rostralmiddlefrontal (100%, 13.59%)	NA	NA
+age	6	586	33.7978611521999	-0.519577304250958	0.124961668072402	lateralorbitofrontal (54.78%, 7.66%)	medialorbitofrontal (45.22%, 9.99%)	NA
+sexFemale	1	61964	32.7447550198762	-0.67766470883695	0.135113116739842	precentral (10.19%, 58.78%)	postcentral (9.22%, 60.05%)	insula (6.56%, 77.78%)
+sexFemale	2	2824	32.6396173737474	-0.686015736290568	0.172847049168335	superiorfrontal (54.78%, 12.70%)	rostralmiddlefrontal (38.03%, 14.83%)	caudalmiddlefrontal (7.19%, 5.43%)
+sexFemale	3	1841	31.5760699220784	-0.799619438918889	0.162926294682532	caudalanteriorcingulate (45.90%, 58.72%)	superiorfrontal (31.61%, 4.78%)	posteriorcingulate (18.58%, 10.47%)
+sexFemale	4	1345	32.6831011496794	-0.582872554028344	0.150324820585854	superiorfrontal (100%, 11.04%)	NA	NA
+ethnicitynon-European	1	3256	32.964101945928	-0.702812847628714	0.181213749691624	postcentral (45.70%, 15.63%)	precentral (35.53%, 10.77%)	supramarginal (18.77%, 7.10%)
+ethnicitynon-European	2	1860	33.313304413149	-0.821355369462762	0.207343952517997	middletemporal (62.47%, 26.10%)	bankssts (25.54%, 22.23%)	inferiortemporal (8.12%, 3.42%)

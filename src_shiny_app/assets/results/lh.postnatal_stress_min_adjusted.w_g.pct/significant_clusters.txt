@@ -1,0 +1,28 @@
+variable	cluster	n_vertices	mean_w_g.pct	mean_coefficient	mean_se	top_region1	top_region2	top_region3
+(Intercept)	1	146190	32.7119619096008	36.6853197498192	1.25255462897526	superiorfrontal (8.33%, 100%)	precentral (7.35%, 100%)	superiorparietal (7.15%, 100%)
+postnatal_stress_z	1	12710	32.4862315488917	-0.309805252872566	0.0738434463540088	precentral (45.26%, 53.57%)	postcentral (27.23%, 36.36%)	caudalmiddlefrontal (11.54%, 39.27%)
+postnatal_stress_z	2	5694	32.9142356655551	-0.309411657850471	0.0796999868128513	middletemporal (42.43%, 54.27%)	supramarginal (21.11%, 13.98%)	superiortemporal (15.53%, 12.16%)
+postnatal_stress_z	3	3594	32.2535203846864	-0.22889570750889	0.0588916881900316	insula (51.00%, 35.05%)	parsopercularis (27.52%, 31.71%)	precentral (15.58%, 5.21%)
+postnatal_stress_z	4	2304	33.3432582741108	-0.238330997998774	0.0624982530053886	lateralorbitofrontal (81.51%, 44.84%)	parsorbitalis (7.99%, 19.25%)	parstriangularis (7.38%, 8.31%)
+postnatal_stress_z	5	2235	32.0095778458229	-0.304037809925325	0.0770940966254113	superiorfrontal (83.00%, 15.23%)	paracentral (16.38%, 11.11%)	precentral (0.63%, 0.13%)
+postnatal_stress_z	6	1911	32.6465372910187	-0.273666542590694	0.0657449577262987	paracentral (65.93%, 38.25%)	precuneus (26.11%, 6.83%)	posteriorcingulate (7.95%, 4.65%)
+postnatal_stress_z	7	1251	32.9644183428085	-0.313723696769475	0.0771050958944072	fusiform (55.16%, 14.64%)	inferiortemporal (23.42%, 6.64%)	entorhinal (17.75%, 20.15%)
+postnatal_stress_z	8	963	33.0672883157648	-0.225645190644487	0.0583382162071091	precentral (98.44%, 8.83%)	postcentral (1.56%, 0.16%)	NA
+postnatal_stress_z	9	466	31.6312985976961	-0.228206825070883	0.0669731044814054	parstriangularis (94.42%, 21.51%)	parsorbitalis (5.58%, 2.72%)	NA
+postnatal_stress_z	10	483	32.1082373036427	-0.259639257692402	0.0748962419527905	fusiform (53.21%, 5.45%)	inferiortemporal (46.79%, 5.12%)	NA
+postnatal_stress_z	11	554	32.7518172309187	-0.282682421001932	0.0778371472086502	rostralmiddlefrontal (92.6%, 7.08%)	caudalmiddlefrontal (7.4%, 1.10%)	NA
+postnatal_stress_z	12	722	32.5900511631247	-0.308015877107504	0.0737294446873037	superiorparietal (100%, 6.91%)	NA	NA
+postnatal_stress_z	13	579	32.8905234985776	-0.241825177313338	0.0630720193032979	parahippocampal (51.47%, 16.21%)	lingual (48.53%, 6.68%)	NA
+postnatal_stress_z	14	486	33.1278664902371	-0.277109957188981	0.0723186315117795	inferiorparietal (100%, 6.17%)	NA	NA
+postnatal_stress_z	15	406	33.5335049654035	-0.2832348638127	0.071803123823234	medialorbitofrontal (99.75%, 15.27%)	rostralanteriorcingulate (0.25%, 0.07%)	NA
+age	1	27637	33.0430892483043	-0.565655361101968	0.114663483693403	lateraloccipital (17.50%, 75.81%)	inferiorparietal (15.43%, 54.17%)	superiorparietal (9.60%, 25.38%)
+age	2	21890	32.6754315432139	-0.64693233316731	0.119682564348486	precentral (32.82%, 66.89%)	postcentral (28.29%, 65.05%)	paracentral (12.71%, 84.49%)
+age	3	7290	32.2437380261837	-0.494098282228281	0.113366448531753	supramarginal (29.09%, 24.66%)	superiortemporal (21.39%, 21.44%)	postcentral (18.24%, 13.97%)
+age	4	2100	32.3499822361021	-0.613575858445395	0.156599991126429	superiorfrontal (60.52%, 10.44%)	rostralmiddlefrontal (26.57%, 7.70%)	frontalpole (9.19%, 70.96%)
+age	5	550	33.7539871256694	-0.516110376119614	0.124859547601505	lateralorbitofrontal (54.18%, 7.12%)	medialorbitofrontal (45.82%, 9.50%)	NA
+age	6	447	32.5195084346038	-0.502245316902796	0.134521082660363	rostralmiddlefrontal (100%, 6.17%)	NA	NA
+age	7	472	33.4135639017985	-0.488397770324501	0.138225477157255	superiorfrontal (100%, 3.88%)	NA	NA
+age	8	391	31.6505402587579	-0.55331253799636	0.150965096395644	rostralmiddlefrontal (100%, 5.4%)	NA	NA
+sexFemale	1	69457	32.7083320946342	-0.684885291022917	0.137437946158304	precentral (9.23%, 59.72%)	postcentral (8.31%, 60.65%)	rostralmiddlefrontal (5.98%, 57.35%)
+sexFemale	2	1503	32.6521486391151	-0.593769442832874	0.149744204438217	superiorfrontal (100%, 12.34%)	NA	NA
+sexFemale	3	448	32.6459116501628	-0.680040625456188	0.172463065927981	lateraloccipital (52.68%, 3.70%)	inferiorparietal (47.32%, 2.69%)	NA
