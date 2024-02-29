@@ -16,6 +16,7 @@ OVLP_COLOR1 = '#88CCEE'  # light blue
 OVLP_COLOR2 = '#DDCC77'  # yellow
 OVLP_COLOR3 = '#CC6677'  # light red
 
+OVLP_COLORS = [OVLP_COLOR1, OVLP_COLOR2, OVLP_COLOR3]
 
 
 

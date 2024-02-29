@@ -5,14 +5,15 @@ from shinywidgets import output_widget, render_plotly
 
 
 import definitions.layout_styles as styles
-from definitions.backend_funcs import detect_models, detect_terms, extract_results, plot_surfmap, plot_overlap
+from definitions.backend_funcs import detect_models, detect_terms, extract_results, compute_overlap, \
+    plot_surfmap, plot_overlap
 
 @module.ui
 def single_result_ui(start_model='postnatal_stress'):
     model_choice = ui.input_selectize(
         id='select_model',
         label='Choose model',
-        choices=detect_models(),
+        choices=detect_models(dic_output=True),
         selected=start_model)
 
     term_choice = ui.output_ui('term_ui')
@@ -155,8 +156,8 @@ app_ui = ui.page_fillable(
         ui.nav_spacer(),
         ui.nav_panel('Main results',
                      'Welcome to BrainMApp',  # Spacer - fix with padding later or also never
-                     single_result_ui('result1', start_model='postnatal_stress'),
-                     single_result_ui('result2', start_model='prenatal_stress'),
+                     single_result_ui('result1', start_model='prenatal_stress'),
+                     single_result_ui('result2', start_model='postnatal_stress'),
                      ' ',  # Spacer
                      value='tab1'
                      ),
@@ -186,11 +187,19 @@ def server(input, output, session):
     @output
     @render.text
     def overlap_info():
-        legend1 = f'<span style = "background-color: {styles.OVLP_COLOR1}; color: {styles.OVLP_COLOR1}"> oo</span>'
-        legend2 = f'<span style = "background-color: {styles.OVLP_COLOR2}; color: {styles.OVLP_COLOR2}"> oo</span>'
-        legend3 = f'<span style = "background-color: {styles.OVLP_COLOR3}; color: {styles.OVLP_COLOR3}"> oo</span>'
-        return ui.markdown(f'You selected {legend1}  **{term1()}** (from the <ins>{model1()}</ins> model) and '
-                           f'{legend2}  **{term2()}** (from the <ins>{model2()}</ins> model).</br>{legend3}  overlap')
+        ovlp_info = compute_overlap(model1(), term1(), model2(), term2())[0]
+
+        text = {}
+        legend = {}
+        for key in [1, 2, 3]:
+            text[key] = f'**{ovlp_info[key][1]}%** ({ovlp_info[key][0]} vertices)' if key in ovlp_info.keys() else \
+                '**0%** (0 vertices)'
+            color = styles.OVLP_COLORS[key-1]
+            legend[key] = f'<span style = "background-color: {color}; color: {color}"> oo</span>'
+
+        return ui.markdown(f'There was a {text[3]} {legend[3]} **overlap** between the terms selected:</br>'
+                           f'{text[1]} was unique to {legend[1]}  **{term1()}** (from the <ins>{model1()}</ins> model)</br>'
+                           f'{text[2]} was unique to {legend[2]}  **{term2()}** (from the <ins>{model2()}</ins> model)')
 
     @reactive.Calc
     def overlap_brain3D():

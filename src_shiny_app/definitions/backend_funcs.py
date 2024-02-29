@@ -16,12 +16,40 @@ import definitions.layout_styles as styles
 resdir = './assets/results/'
 
 
-def detect_models(resdir=resdir):
+def detect_models(resdir=resdir, dic_output=False):
     allmods = [x[0].split('/')[-1] for x in os.walk(resdir)][1:]  # assume all stored in resdir
 
     am_clean = list(set([x.split('.')[1] for x in allmods]))  # assume structure lh.name.measure
 
-    # Assume you have left and right hemispheres are always run
+    if dic_output:
+        return {'base model': {'covariate_base': 'Covariates only'},
+                'prenatal models': {'prenatal_stress': 'Prenatal ELS - fully adjusted',
+                                    'prenatal_stress_min_adjusted': 'Prenatal ELS - min. adjusted',
+                                    'prenatal_stress_nonlinear': 'Prenatal ELS - non-linear',
+                                    'prenatal_domains': 'Prenatal domains',
+                                    'pre_life_events':'Prenatal life events',
+                                    'pre_contextual_risk':'Prenatal contextual risk',
+                                    'pre_parental_risk':'Prenatal parental risk',
+                                    'pre_interpersonal_risk': 'Prenatal interpersonal risk',
+                                    'prenatal_stress_by_sex': 'Prenatal ELS by sex',
+                                    'prenatal_stress_by_age': 'Prenatal ELS by age',
+                                    'prenatal_stress_by_ethnicity':'Prenatal ELS by ethnicity',
+                                    'prenatal_stress_ct_adjusted': 'Prenatal ELS + cort. thickness'},
+                'postnatal models': {'postnatal_stress': 'Postnatal ELS - fully adjusted',
+                                     'postnatal_stress_min_adjusted': 'Postnatal ELS - min. adjusted',
+                                     'postnatal_stress_nonlinear': 'Postnatal ELS - non-linear',
+                                     'postnatal_domains': 'Postnatal domains',
+                                     'post_life_events': 'Postnatal life events',
+                                     'post_contextual_risk': 'Postnatal contextual risk',
+                                     'post_parental_risk': 'Postnatal parental risk',
+                                     'post_interpersonal_risk': 'Postnatal interpersonal risk',
+                                     'post_direct_victimization': 'Postnatal direct victimization',
+                                     'postnatal_stress_by_sex': 'Postnatal ELS by sex',
+                                     'postnatal_stress_by_age': 'Postnatal ELS by age',
+                                     'postnatal_stress_by_ethnicity': 'Postnatal ELS by ethnicity',
+                                     'postnatal_stress_ct_adjusted': 'Postnatal ELS + cort. thickness'}}
+
+        # Assume you have left and right hemispheres are always run
     return sorted(am_clean)
 
 
@@ -86,6 +114,40 @@ def extract_results(model, term, thr='30'):
 
     return np.nanmin(min_beta), np.nanmax(max_beta), np.nanmean(med_beta), n_clusters, \
            sign_clusters_left_right, sign_betas_left_right
+
+
+def compute_overlap(model1, term1, model2, term2):
+
+    sign_clusters1 = extract_results(model1, term1)[4]
+    sign_clusters2 = extract_results(model2, term2)[4]
+
+    ovlp_maps = {}
+    ovlp_info = {}
+
+    for hemi in ['left', 'right']:
+        sign1, sign2 = sign_clusters1[hemi], sign_clusters2[hemi]
+
+        sign1[sign1 > 0] = 1
+        sign2[sign2 > 0] = 2
+
+        # Create maps
+        ovlp_maps[hemi] = np.sum([sign1, sign2], axis=0)
+
+        # Extract info
+        uniques, counts = np.unique(ovlp_maps[hemi], return_counts=True)
+        ovlp_info[hemi] = dict(zip(uniques, counts))
+        ovlp_info[hemi].pop(0)  # only significant clusters
+
+    # Merge left and right info
+    info = {k: [ovlp_info['left'].get(k, 0) + ovlp_info['right'].get(k, 0)] for k in
+            set(ovlp_info['left']) | set(ovlp_info['right'])}
+    percent = [round(i[0] / sum(sum(info.values(), [])) * 100, 1) for i in info.values()]
+
+    for i, k in enumerate(info.keys()):
+        info[k].append(percent[i])
+
+    return info, ovlp_maps
+
 
 
 # ===== PLOTTING FUNCTIONS ===================================================================
@@ -164,8 +226,7 @@ def plot_surfmap(model,
 
 def plot_overlap(model1, term1, model2, term2, surf='pial', resol='fsaverage6'):
 
-    sign_clusters1 = extract_results(model1, term1)[4]
-    sign_clusters2 = extract_results(model2, term2)[4]
+    ovlp_maps = compute_overlap(model1, term1, model2, term2)[1]
 
     fs_avg, n_nodes = fetch_surface(resol)
 
@@ -175,26 +236,19 @@ def plot_overlap(model1, term1, model2, term2, surf='pial', resol='fsaverage6'):
 
     for hemi in ['left', 'right']:
 
-        sign1, sign2 = sign_clusters1[hemi], sign_clusters2[hemi]
-
-        sign1[sign1 > 0] = 1
-        sign2[sign2 > 0] = 2
-
-        ovlp_map = np.sum([sign1, sign2], axis=0)
-
         brain3D[hemi] = plotting.plot_surf(
             surf_mesh=fs_avg[f'{surf}_{hemi}'],  # Surface mesh geometry
-            surf_map=ovlp_map[:n_nodes],  # Statistical map
+            surf_map=ovlp_maps[hemi][:n_nodes],  # Statistical map
             bg_map=fs_avg[f'sulc_{hemi}'],  # alpha=.2, only in matplotlib
             darkness=0.7,
             hemi=hemi,
             view='lateral',
             engine='plotly',  # or matplolib # axes=axs[0] # only for matplotlib
             cmap=cmap,
-            symmetric_cmap=False,
-            colorbar=True,
+            # symmetric_cmap=False,
+            colorbar=False,
             vmin=1, vmax=3,
-            cbar_vmin=1, cbar_vmax=3,
+            # cbar_vmin=1, cbar_vmax=3,
             # title=f'{hemi} hemisphere',
             # title_font_size=20,
             threshold=1
