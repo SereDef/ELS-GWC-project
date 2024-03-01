@@ -5,7 +5,7 @@ from shinywidgets import output_widget, render_plotly
 
 
 import definitions.layout_styles as styles
-from definitions.backend_funcs import detect_models, detect_terms, extract_results, compute_overlap, \
+from definitions.backend_funcs import detect_models, extract_results, compute_overlap, \
     plot_surfmap, plot_overlap
 
 @module.ui
@@ -13,7 +13,7 @@ def single_result_ui(start_model='postnatal_stress'):
     model_choice = ui.input_selectize(
         id='select_model',
         label='Choose model',
-        choices=detect_models(dic_output=True),
+        choices=detect_models(out_clean=True),
         selected=start_model)
 
     term_choice = ui.output_ui('term_ui')
@@ -74,11 +74,12 @@ def update_single_result(input: Inputs, output: Outputs, session: Session) -> tu
     @render.ui
     def term_ui():
         mod = input.select_model()
+        terms = list(detect_models()[mod].keys())
         return ui.input_selectize(
             id='select_term',
             label="Choose term",
-            choices=detect_terms(mod),
-            selected=detect_terms(mod)[0])  # always switch to first term after intercept
+            choices=terms,
+            selected=terms[0])  # always switch to first term after intercept
 
     @render.text
     def info():

@@ -13,65 +13,62 @@ import definitions.layout_styles as styles
 
 # ===== DATA PROCESSING FUNCTIONS ==============================================================
 
-resdir = './assets/results/'
+results_directory = './assets/results/'
 
 
-def detect_models(resdir=resdir, dic_output=False):
-    allmods = [x[0].split('/')[-1] for x in os.walk(resdir)][1:]  # assume all stored in resdir
+def detect_models(resdir=results_directory, out_clean=False):
+    all_models = [x[0].split('/')[-1] for x in os.walk(resdir)][1:]  # assume all stored in resdir
 
-    am_clean = list(set([x.split('.')[1] for x in allmods]))  # assume structure lh.name.measure
+    all_model_names = list(set([x.split('.')[1] for x in all_models]))  # assume structure lh.name.measure
 
-    if dic_output:
-        return {'base model': {'covariate_base': 'Covariates only'},
-                'prenatal models': {'prenatal_stress': 'Prenatal ELS - fully adjusted',
-                                    'prenatal_stress_min_adjusted': 'Prenatal ELS - min. adjusted',
-                                    'prenatal_stress_nonlinear': 'Prenatal ELS - non-linear',
-                                    'prenatal_domains': 'Prenatal domains',
-                                    'pre_life_events':'Prenatal life events',
-                                    'pre_contextual_risk':'Prenatal contextual risk',
-                                    'pre_parental_risk':'Prenatal parental risk',
-                                    'pre_interpersonal_risk': 'Prenatal interpersonal risk',
-                                    'prenatal_stress_by_sex': 'Prenatal ELS by sex',
-                                    'prenatal_stress_by_age': 'Prenatal ELS by age',
-                                    'prenatal_stress_by_ethnicity':'Prenatal ELS by ethnicity',
-                                    'prenatal_stress_ct_adjusted': 'Prenatal ELS + cort. thickness'},
-                'postnatal models': {'postnatal_stress': 'Postnatal ELS - fully adjusted',
-                                     'postnatal_stress_min_adjusted': 'Postnatal ELS - min. adjusted',
-                                     'postnatal_stress_nonlinear': 'Postnatal ELS - non-linear',
-                                     'postnatal_domains': 'Postnatal domains',
-                                     'post_life_events': 'Postnatal life events',
-                                     'post_contextual_risk': 'Postnatal contextual risk',
-                                     'post_parental_risk': 'Postnatal parental risk',
-                                     'post_interpersonal_risk': 'Postnatal interpersonal risk',
-                                     'post_direct_victimization': 'Postnatal direct victimization',
-                                     'postnatal_stress_by_sex': 'Postnatal ELS by sex',
-                                     'postnatal_stress_by_age': 'Postnatal ELS by age',
-                                     'postnatal_stress_by_ethnicity': 'Postnatal ELS by ethnicity',
-                                     'postnatal_stress_ct_adjusted': 'Postnatal ELS + cort. thickness'}}
+    if out_clean:
+        clean_dic = {'base model': {'covariate_base': 'Covariates only'},
+                     'prenatal models': {'prenatal_stress': 'Prenatal ELS - fully adjusted',
+                                         'prenatal_stress_min_adjusted': 'Prenatal ELS - min. adjusted',
+                                         'prenatal_stress_nonlinear': 'Prenatal ELS - non-linear',
+                                         'prenatal_domains': 'Prenatal domains',
+                                         'pre_life_events': 'Prenatal life events',
+                                         'pre_contextual_risk': 'Prenatal contextual risk',
+                                         'pre_parental_risk': 'Prenatal parental risk',
+                                         'pre_interpersonal_risk': 'Prenatal interpersonal risk',
+                                         'prenatal_stress_by_sex': 'Prenatal ELS by sex',
+                                         'prenatal_stress_by_age': 'Prenatal ELS by age',
+                                         'prenatal_stress_by_ethnicity': 'Prenatal ELS by ethnicity',
+                                         'prenatal_stress_ct_adjusted': 'Prenatal ELS + cort. thickness'},
+                     'postnatal models': {'postnatal_stress': 'Postnatal ELS - fully adjusted',
+                                          'postnatal_stress_min_adjusted': 'Postnatal ELS - min. adjusted',
+                                          'postnatal_stress_nonlinear': 'Postnatal ELS - non-linear',
+                                          'postnatal_domains': 'Postnatal domains',
+                                          'post_life_events': 'Postnatal life events',
+                                          'post_contextual_risk': 'Postnatal contextual risk',
+                                          'post_parental_risk': 'Postnatal parental risk',
+                                          'post_interpersonal_risk': 'Postnatal interpersonal risk',
+                                          'post_direct_victimization': 'Postnatal direct victimization',
+                                          'postnatal_stress_by_sex': 'Postnatal ELS by sex',
+                                          'postnatal_stress_by_age': 'Postnatal ELS by age',
+                                          'postnatal_stress_by_ethnicity': 'Postnatal ELS by ethnicity',
+                                          'postnatal_stress_ct_adjusted': 'Postnatal ELS + cort. thickness'}}
+        dic_model_names = [ele for ww in clean_dic.keys() for ele in clean_dic[ww]]
+        if not set(all_model_names) == set(dic_model_names):
+            return all_model_names
+        else:
+            return clean_dic
 
-        # Assume you have left and right hemispheres are always run
-    return sorted(am_clean)
+    out_terms = {}
+    for model in all_model_names:
+        # Assume you have left and right hemispheres are always run and with the same model
+        mdir = f'{resdir}lh.{model}.w_g.pct'
+        stacks = pd.read_table(f'{mdir}/stack_names.txt', delimiter="\t")
 
+        out_terms[model] = dict(zip(list(stacks.stack_name)[1:], list(stacks.stack_number)[1:]))
 
-def detect_terms(model, mode='list', resdir=resdir):
-    l_mdir, r_mdir = [f'{resdir}{h}h.{model}.w_g.pct' for h in ['l', 'r']]
-
-    l_stacks, r_stacks = [pd.read_table(f'{mdir}/stack_names.txt', delimiter="\t") for mdir in [l_mdir, r_mdir]]
-
-    if not l_stacks.equals(r_stacks):
-        print("ATTENTION: different models for left and right hemisphere")  # Happens with mean thickness
-
-    if mode == 'list':
-        return list(l_stacks.stack_name)[1:]  # Ignore intercept
-    else:
-        return l_stacks, l_mdir, r_mdir
+    # Assume you have left and right hemispheres are always run
+    return out_terms
 
 
 def extract_results(model, term, thr='30'):
 
-    stacks, l_mdir, r_mdir = detect_terms(model, mode='df')
-    # Read in term names
-    stack = stacks.loc[stacks.stack_name == term, 'stack_number'].iloc[0]
+    stack = detect_models()[model][term]
 
     min_beta = []
     max_beta = []
@@ -81,7 +78,8 @@ def extract_results(model, term, thr='30'):
     sign_clusters_left_right = {}
     sign_betas_left_right = {}
 
-    for h, mdir in enumerate([l_mdir, r_mdir]):
+    for hemi in ['left', 'right']:
+        mdir = f'{results_directory}{hemi[0]}h.{model}.w_g.pct'
         # Read significant cluster map
         ocn = nb.load(f'{mdir}/stack{stack}.cache.th{thr}.abs.sig.ocn.mgh')
         sign_clusters = np.array(ocn.dataobj).flatten()
@@ -108,12 +106,10 @@ def extract_results(model, term, thr='30'):
             max_beta.append(np.nanmax(betas))
             med_beta.append(np.nanmean(betas))
 
-        hemi = 'left' if h == 0 else 'right'
         sign_clusters_left_right[hemi] = sign_clusters
         sign_betas_left_right[hemi] = betas
 
-    return np.nanmin(min_beta), np.nanmax(max_beta), np.nanmean(med_beta), n_clusters, \
-           sign_clusters_left_right, sign_betas_left_right
+    return np.nanmin(min_beta), np.nanmax(max_beta), np.nanmean(med_beta), n_clusters, sign_clusters_left_right, sign_betas_left_right
 
 
 def compute_overlap(model1, term1, model2, term2):
@@ -147,7 +143,6 @@ def compute_overlap(model1, term1, model2, term2):
         info[k].append(percent[i])
 
     return info, ovlp_maps
-
 
 
 # ===== PLOTTING FUNCTIONS ===================================================================
@@ -245,12 +240,8 @@ def plot_overlap(model1, term1, model2, term2, surf='pial', resol='fsaverage6'):
             view='lateral',
             engine='plotly',  # or matplolib # axes=axs[0] # only for matplotlib
             cmap=cmap,
-            # symmetric_cmap=False,
             colorbar=False,
             vmin=1, vmax=3,
-            # cbar_vmin=1, cbar_vmax=3,
-            # title=f'{hemi} hemisphere',
-            # title_font_size=20,
             threshold=1
         ).figure
 
