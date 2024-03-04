@@ -3,6 +3,8 @@
 #SBATCH --job-name="ELSICM"
 #SBATCH --output=ELS_ICM_QDECR.log
 #SBATCH -t 4-00:00
+#SBATCH --mail-user=s.defina@erasmusmc.nl
+#SBATCH --mail-type=ALL
 
 # SET-UP
 module load R
@@ -18,5 +20,5 @@ source $FREESURFER_HOME/SetUpFreeSurfer.sh
 # Run entire pipeline (or part of it)
 
 # Rscript 1.els_brain_merge.R
-Rscript 2.clean_and_filter.R
+# Rscript 2.clean_and_filter.R
 Rscript 3.qdecr_analyses.R

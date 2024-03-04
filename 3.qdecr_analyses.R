@@ -14,7 +14,7 @@ FSHOME_DIR <- "/mnt/appl/tools/freesurfer/6.0.0"  # or set up globally
 cat("\nEnviroment checks:\n", Sys.getenv("FREESURFER_HOME"))
                       # "\n", Sys.getenv("SUBJECTS_DIR"))
 
-OUT_DIR <- file.path(project_dir,"QDECR_results_260224")
+OUT_DIR <- file.path(project_dir,"QDECR_results_040324")
 
 # sample <- readRDS(file.choose())
 sample <- readRDS(file.path(project_dir, "Data/ELS_brain_sample.rds"))
@@ -31,29 +31,39 @@ sample <- datlist2mids( scale_datlist( mids2datlist(sample), orig_var = var_list
 # Main analysis function
 run_model <- function(analysis_name, 
                       outcome = "qdecr_w_g.pct", 
-                      covariates = "+ age + sex + ethnicity + prenatal_smoking + prenatal_alcohol", 
+                      covariates = "+ age + sex", # + ethnicity + prenatal_smoking + prenatal_alcohol", 
                       dataset=sample) {
   
   # Define model formula for all analyses
+  # if (analysis_name=="intercept_only") { 
+  #  exposure <- "1"
+  #  covariates <- ""
+  # } else 
   if (analysis_name=="covariate_base") { 
     exposure <- ""
-    covariates <- substr(covariates, 3, nchar(covariates)) # remove leading + 
+    covariates <- "age + sex + ethnicity + prenatal_smoking + prenatal_alcohol" # substr(covariates, 3, nchar(covariates)) # remove leading "+"
+  # Minimally adjusted models
+  } else if (grepl( "_mini_adjusted", analysis_name)) { 
+    exposure <- gsub("_mini_adjusted","_z", analysis_name)
+  # Confounder adjusted models
+  } else if (grepl( "_conf_adjusted", analysis_name)) { 
+    exposure <- gsub("_conf_adjusted","_z", analysis_name)
+    covariates <- "+ age + sex + ethnicity + prenatal_smoking + prenatal_alcohol"
   # all domains
   } else if (analysis_name=="postnatal_domains") { exposure <- paste0(paste(post_domains, collapse="_z + "),"_z") 
   } else if (analysis_name=="prenatal_domains") { exposure <- paste0(paste(pren_domains, collapse="_z + "),"_z")
-  # stratified analyses
+  # interaction analyses
   } else if (grepl( "_by_", analysis_name)) { interaction_list <- stringr::str_split(analysis_name, "_by_")[[1]]
    exposure <- paste(interaction_list, collapse="_z * ")
    covariates <- gsub(paste(" +", interaction_list[2]), "", covariates, fixed=TRUE)
-  # Adjusted for cortical thickness
-  } else if (grepl( "_ct_adjusted", analysis_name)) { 
-    exposure <- gsub("_ct_adjusted","_z", analysis_name)
-  } else if (grepl( "_min_adjusted", analysis_name)) { 
-    exposure <- gsub("_min_adjusted","_z", analysis_name)
-    covariates <- "+ age + sex"
+  # non-linear models
   } else if (grepl("_nonlinear", analysis_name)) {
     exposure <- gsub("_nonlinear","_cat", analysis_name)
-  # simpler model
+  # Adjusted for cortical thickness
+   } else if (grepl( "_cthick_adjusted", analysis_name)) { 
+    exposure <- gsub("_cthick_adjusted","_z", analysis_name)
+    covariates <- "+ age + sex + ethnicity + prenatal_smoking + prenatal_alcohol + mean_cortical_thickness_lh + mean_cortical_thickness_rh"
+  # individual domain models
   } else { exposure <- paste0(analysis_name,"_z") }
   
   # Formula
@@ -61,11 +71,6 @@ run_model <- function(analysis_name,
   
   # Run both hemispheres
   for (hemisf in c("rh","lh")) {
-    
-    if (grepl( "_ct_adjusted", analysis_name)) { 
-      covariates <- paste0(covariates, " + mean_cortical_thickness_", hemisf) 
-      form <- as.formula(paste0(outcome, " ~ ", exposure, covariates))
-    }
     
     a <- qdecr_fastlm(form, 
                       data = dataset, 
@@ -78,9 +83,6 @@ run_model <- function(analysis_name,
                       dir_fshome = FSHOME_DIR,
                       dir_tmp = file.path(project_dir,"qdecr_tmp"), # "/dev/shm", = shared memory
                       dir_out = OUT_DIR) # folder for saving in the QdecR structure
-    
-    # Save model object too
-    # saveRDS(a, file.path(OUT_DIR,"all_models", paste0(analysis_name,"_",hemisf,".rds"))) 
   }
 }
 
@@ -88,27 +90,26 @@ run_model <- function(analysis_name,
 # Sensitivity: 
 #   -	Sample selection 
 
-analyses_list <- c(#"covariate_base", 
-                   
-                  # "prenatal_stress",
-                  # "prenatal_domains", pren_domains,
-                  # "prenatal_stress_by_sex",
-                  # "prenatal_stress_by_age",  
-                  # Error in unserialize(socklist[[n]]) : error reading from connection
-                  # at this point some slurm worker died, rip 
-                   "prenatal_stress_by_ethnicity",
+analyses_list <- c(# "intercept_only", 
+                   "covariate_base",
+
+                   "prenatal_stress_mini_adjusted",
+                   "prenatal_stress_conf_adjusted",
+                   "prenatal_domains", post_domains,
                    "prenatal_stress_nonlinear",
-                   "prenatal_stress_min_adjusted",
-                   "prenatal_stress_ct_adjusted",
+                   "prenatal_stress_by_sex",
+                   "prenatal_stress_by_age",
+                   "prenatal_stress_by_ethnicity",
+                   "prenatal_stress_cthick_adjusted",
                    
-                   "postnatal_stress",
-                   "postnatal_domains", post_domains,
+                   "postnatal_stress_mini_adjusted",
+                   "postnatal_stress_conf_adjusted",
+                   "postnatal_domains", pren_domains,
+                   "postnatal_stress_nonlinear",
                    "postnatal_stress_by_sex",
                    "postnatal_stress_by_age",
                    "postnatal_stress_by_ethnicity",
-                   "postnatal_stress_nonlinear",
-                   "postnatal_stress_min_adjusted",
-                   "postnatal_stress_ct_adjusted")
+                   "postnatal_stress_cthick_adjusted")
 
 for (model in analyses_list) { run_model(model) }
 
