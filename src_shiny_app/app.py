@@ -3,7 +3,6 @@ from shiny import App, Inputs, Outputs, Session, module, reactive, render, ui
 
 from shinywidgets import output_widget, render_plotly
 
-
 import definitions.layout_styles as styles
 from definitions.backend_funcs import detect_models, extract_results, compute_overlap, \
     plot_surfmap, plot_overlap
