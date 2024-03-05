@@ -1,0 +1,71 @@
+variable	cluster	n_vertices	mean_w_g.pct	mean_coefficient	mean_se	top_region1	top_region2	top_region3
+(Intercept)	1	101693	33.2463616029558	19.8002825435376	2.78988603326316	precentral (9.56%, 90.82%)	inferiorparietal (6.89%, 72.43%)	superiorfrontal (6.81%, 58.32%)
+prenatal_stress_z	1	419	33.185036841994	-0.366795530822795	0.0969628646685286	superiorfrontal (100%, 3.53%)	NA	NA
+prenatal_stress_z	2	278	32.4849716961926	-0.266420594919071	0.0671063609850064	lateraloccipital (99.64%, 4.65%)	inferiorparietal (0.36%, 0.01%)	NA
+prenatal_stress_z	3	386	33.3752592364912	-0.356117927348675	0.0952873553482362	postcentral (100%, 4.22%)	NA	NA
+prenatal_stress_z	4	512	32.3498688401426	-0.294964974164031	0.0807474838366034	precuneus (60.94%, 3.91%)	paracentral (39.06%, 5.22%)	NA
+prenatal_stress_z	5	365	35.0434738701797	-0.307165849168007	0.0817371498640269	paracentral (51.23%, 4.88%)	precentral (48.77%, 1.66%)	NA
+prenatal_stress_z	6	190	35.0974794565096	-0.314244482862322	0.0864743528789596	caudalmiddlefrontal (100%, 5.44%)	NA	NA
+prenatal_stress_z	7	288	34.8105266564519	-0.334515486740404	0.0958652162355267	postcentral (84.03%, 2.65%)	supramarginal (15.97%, 0.56%)	NA
+age	1	4335	33.0794992364219	-0.352664417819031	0.0837221688877753	superiorparietal (35.78%, 15.17%)	cuneus (21.91%, 58.00%)	pericalcarine (20.72%, 49.26%)
+age	2	5176	33.4760390450257	0.589836749235252	0.145090742854306	superiortemporal (42.85%, 32.29%)	middletemporal (29.21%, 29.90%)	fusiform (9.68%, 10.75%)
+age	3	6376	33.0706410360004	-0.555275592868832	0.109018700069969	precentral (64.95%, 38.68%)	postcentral (19.51%, 13.61%)	paracentral (15.54%, 25.87%)
+age	4	2266	32.9091751080757	-0.378731684875983	0.0843481619095155	lateraloccipital (58.25%, 22.14%)	lingual (34.73%, 20.21%)	fusiform (7.02%, 3.41%)
+age	5	722	33.0467106864425	-0.677342959800916	0.175531942036178	superiorfrontal (82.13%, 4.99%)	frontalpole (12.05%, 23.58%)	rostralmiddlefrontal (5.12%, 0.47%)
+age	6	369	32.8640836528489	0.452331297362077	0.125995045169421	parsorbitalis (98.92%, 38.58%)	lateralorbitofrontal (1.08%, 0.09%)	NA
+age	7	346	34.133037989551	0.585722999765694	0.155831586806416	inferiortemporal (69.65%, 5.74%)	middletemporal (30.35%, 2.08%)	NA
+age	8	307	33.7758317834538	0.366646053736684	0.100799544407995	insula (100%, 6.03%)	NA	NA
+age	9	175	31.7540613057126	-0.251304990478924	0.071083063525813	pericalcarine (100%, 9.6%)	NA	NA
+age	10	151	31.0414106250862	0.47099539617829	0.133600967905379	rostralmiddlefrontal (94.04%, 1.81%)	parstriangularis (5.96%, 0.38%)	NA
+sexFemale	1	79303	33.2730540577225	-0.777693773558798	0.140493709568786	inferiorparietal (11.50%, 94.21%)	superiorparietal (10.40%, 80.72%)	precentral (9.28%, 68.72%)
+sexFemale	2	5436	33.088317523389	-0.715028544267019	0.15267964648775	superiorfrontal (62.44%, 28.57%)	caudalanteriorcingulate (17.99%, 60.82%)	posteriorcingulate (12.29%, 22.31%)
+sexFemale	3	2208	33.5211218903068	-0.756639627766782	0.142716563313498	medialorbitofrontal (61.37%, 48.38%)	lateralorbitofrontal (38.63%, 19.59%)	NA
+sexFemale	4	1276	33.1063129501541	-0.692162056701684	0.1568984488218	superiorfrontal (66.46%, 7.14%)	caudalmiddlefrontal (33.54%, 12.25%)	NA
+sexFemale	5	567	34.4948608057289	-0.59183270480267	0.158870201577585	superiorfrontal (54.14%, 2.58%)	precentral (45.86%, 2.43%)	NA
+sexFemale	6	302	32.9766846564135	-0.562308231331655	0.147695149264194	superiorfrontal (67.55%, 1.72%)	medialorbitofrontal (32.45%, 3.50%)	NA
+sexFemale	7	340	32.3019415906108	-0.422385991408544	0.110656067224986	lingual (72.06%, 6.29%)	parahippocampal (27.94%, 5.45%)	NA
+sexFemale	8	289	32.7682140825923	-0.629107594283807	0.169125688065707	superiorfrontal (95.85%, 2.33%)	rostralmiddlefrontal (4.15%, 0.15%)	NA
+ethnicitynon-European	1	3466	32.4365711192839	-0.736159368567018	0.191493495193886	inferiorparietal (39.41%, 14.12%)	middletemporal (33.15%, 22.72%)	lateraloccipital (13.24%, 7.70%)
+ethnicitynon-European	2	1806	33.6983209465628	-0.701058530662279	0.183166890940397	supramarginal (47.12%, 10.44%)	superiortemporal (41.64%, 10.95%)	bankssts (8.58%, 7.06%)
+ethnicitynon-European	3	878	31.6776051115696	-0.638836040380061	0.159025469561508	lingual (74.37%, 16.77%)	precuneus (11.62%, 1.28%)	pericalcarine (9.11%, 4.39%)
+ethnicitynon-European	4	670	33.8219149380119	-0.709370908630428	0.188471735013065	inferiorparietal (58.36%, 4.04%)	supramarginal (41.64%, 3.42%)	NA
+ethnicitynon-European	5	666	33.505774998537	-0.703392228296211	0.177807876968885	lateralorbitofrontal (99.7%, 15.25%)	insula (0.3%, 0.04%)	NA
+ethnicitynon-European	6	546	32.9417378192037	-0.624063046096445	0.169459110842301	parahippocampal (68.86%, 21.58%)	lingual (30.77%, 4.31%)	fusiform (0.37%, 0.04%)
+ethnicitynon-European	7	698	34.2546944824293	-0.667333585143431	0.173255625845368	superiorparietal (50.29%, 3.43%)	postcentral (40.97%, 3.13%)	supramarginal (8.74%, 0.75%)
+ethnicitynon-European	8	325	32.8533363420064	-0.665802199198649	0.182984443261073	precentral (100%, 3.04%)	NA	NA
+ethnicitynon-European	9	425	32.9815227108093	-0.532617521636626	0.137598481844453	insula (94.35%, 7.88%)	postcentral (5.65%, 0.26%)	NA
+ethnicitynon-European	10	231	31.5706144011076	-0.561645953944235	0.152147152465143	lateralorbitofrontal (100%, 5.31%)	NA	NA
+ethnicitynon-European	11	275	32.2638026850048	-0.483657385219227	0.13195248471065	precentral (83.27%, 2.14%)	postcentral (16.73%, 0.50%)	NA
+ethnicitynon-European	12	203	35.4957325199047	-0.448163500266709	0.125339377873343	precuneus (100%, 2.55%)	NA	NA
+ethnicitynon-European	13	165	33.7363697658402	-0.866936208985069	0.249116478363673	inferiortemporal (100%, 3.93%)	NA	NA
+ethnicitynon-European	14	160	30.0307259404385	-0.514957911148667	0.145797626953572	postcentral (89.38%, 1.56%)	precentral (10.62%, 0.16%)	NA
+prenatal_alcohol	1	285	30.990944055742	0.231493058120995	0.0648080968543103	fusiform (67.37%, 4.12%)	lingual (32.63%, 2.39%)	NA
+prenatal_alcohol	2	158	32.717971984928	0.25364844538743	0.0701838399318955	inferiorparietal (63.29%, 1.03%)	lateraloccipital (36.71%, 0.97%)	NA
+mean_cortical_thickness_lh	1	7131	34.320677919031	7.09243952651259	1.81019781413511	precuneus (50.54%, 45.19%)	posteriorcingulate (15.86%, 37.78%)	paracentral (15.16%, 28.22%)
+mean_cortical_thickness_lh	2	6747	33.1482000979448	7.51585286936089	1.69908979643322	insula (49.49%, 65.60%)	lateralorbitofrontal (29.79%, 46.16%)	supramarginal (11.74%, 9.72%)
+mean_cortical_thickness_lh	3	3143	34.3174787015983	7.79535672864146	1.96008493101525	precentral (36.68%, 10.77%)	postcentral (36.33%, 12.50%)	parsopercularis (26.98%, 34.30%)
+mean_cortical_thickness_lh	4	2052	33.7990761505311	-11.8940762864684	2.46634807259019	middletemporal (52.73%, 21.40%)	inferiortemporal (36.65%, 17.91%)	superiortemporal (5.41%, 1.62%)
+mean_cortical_thickness_lh	5	2035	32.8390708122132	6.6557736415535	1.69954567078583	fusiform (71.06%, 31.02%)	parahippocampal (18.87%, 22.04%)	lingual (9.68%, 5.06%)
+mean_cortical_thickness_lh	6	960	32.6740970496823	-3.96075561890999	1.03623962489267	lingual (56.67%, 13.97%)	lateraloccipital (24.69%, 3.97%)	pericalcarine (18.65%, 9.82%)
+mean_cortical_thickness_lh	7	918	32.8557308231968	7.72470431234322	2.0473621513589	inferiorparietal (74.07%, 7.03%)	superiorparietal (25.93%, 2.33%)	NA
+mean_cortical_thickness_lh	8	518	33.1100542540399	-8.66920755360578	2.03842161544041	rostralmiddlefrontal (99.03%, 6.52%)	parsorbitalis (0.97%, 0.53%)	NA
+mean_cortical_thickness_lh	9	950	32.503086882228	7.32638995923494	1.96528120994568	bankssts (59.26%, 25.64%)	middletemporal (29.16%, 5.48%)	superiortemporal (11.58%, 1.60%)
+mean_cortical_thickness_lh	10	325	34.2402593824793	-3.60478450481708	0.971886363579677	pericalcarine (69.54%, 12.40%)	cuneus (30.46%, 6.04%)	NA
+mean_cortical_thickness_lh	11	447	34.2783832853948	6.98108901166809	1.88161159735131	parstriangularis (96.87%, 18.19%)	parsopercularis (3.13%, 0.57%)	NA
+mean_cortical_thickness_lh	12	416	33.5628354308591	7.86267000436783	2.18407642296874	superiortemporal (85.82%, 5.20%)	transversetemporal (14.18%, 7.55%)	NA
+mean_cortical_thickness_lh	13	244	32.0872562846845	6.11889470014416	1.71440837471212	inferiorparietal (100%, 2.52%)	NA	NA
+mean_cortical_thickness_lh	14	281	32.4149261843782	6.98319939447043	1.89304270947955	superiorfrontal (99.29%, 2.35%)	paracentral (0.71%, 0.05%)	NA
+mean_cortical_thickness_lh	15	215	31.9135034592772	7.48012852779655	1.99212182122608	supramarginal (100%, 2.64%)	NA	NA
+mean_cortical_thickness_lh	16	161	32.0862191795655	5.95316610277069	1.66175243647202	precuneus (59.63%, 1.20%)	isthmuscingulate (40.37%, 2.72%)	NA
+mean_cortical_thickness_rh	1	24611	33.1573515325404	10.9595623808018	2.14884004663227	superiorfrontal (31.71%, 65.71%)	rostralmiddlefrontal (31.63%, 98.98%)	caudalmiddlefrontal (10.76%, 75.79%)
+mean_cortical_thickness_rh	2	5912	33.8578454371785	16.6372188257106	2.31668867396647	middletemporal (36.06%, 42.16%)	superiortemporal (24.75%, 21.30%)	inferiortemporal (20.89%, 29.42%)
+mean_cortical_thickness_rh	3	7455	33.2544213118924	8.56034954424116	2.052082700013	superiorparietal (42.07%, 30.68%)	supramarginal (32.29%, 29.53%)	postcentral (25.65%, 20.92%)
+mean_cortical_thickness_rh	4	2858	33.0725025656486	-8.08199718951178	1.67301533637637	insula (85.55%, 48.04%)	lateralorbitofrontal (14.35%, 9.42%)	superiortemporal (0.10%, 0.04%)
+mean_cortical_thickness_rh	5	1347	32.9597940001838	-5.97005017315271	1.35705536046379	lingual (59.09%, 20.44%)	parahippocampal (40.76%, 31.52%)	entorhinal (0.07%, 0.11%)
+mean_cortical_thickness_rh	6	966	33.354075972027	8.74090709597428	1.9260091753233	parstriangularis (59.83%, 24.29%)	parsopercularis (26.29%, 10.28%)	insula (13.15%, 2.50%)
+mean_cortical_thickness_rh	7	655	33.2858448979841	-6.75884241657403	1.75094025608237	fusiform (100%, 14.05%)	NA	NA
+mean_cortical_thickness_rh	8	583	33.6542907887915	-8.04308474166111	1.92422333180802	lateralorbitofrontal (55.06%, 7.37%)	medialorbitofrontal (44.94%, 9.35%)	NA
+mean_cortical_thickness_rh	9	300	33.096757451925	6.1833417224884	1.57578938404719	superiorparietal (100%, 2.93%)	NA	NA
+mean_cortical_thickness_rh	10	375	32.8466503863796	8.74938195164998	1.98888692029317	caudalanteriorcingulate (100%, 23.32%)	NA	NA
+mean_cortical_thickness_rh	11	231	32.0531372798891	7.54931429454258	2.005356185364	precentral (100%, 2.16%)	NA	NA
+mean_cortical_thickness_rh	12	155	31.7136990633978	7.24504429601854	2.01760280593749	inferiorparietal (100%, 1.6%)	NA	NA

@@ -7,7 +7,3 @@ stack_number	stack_name
 6	post_direct_victimization_z
 7	age
 8	sexFemale
-9	ethnicitynon-European
-10	ethnicityother European
-11	prenatal_smoking
-12	prenatal_alcohol

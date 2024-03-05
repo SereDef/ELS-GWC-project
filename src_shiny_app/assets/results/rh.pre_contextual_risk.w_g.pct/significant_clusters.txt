@@ -1,21 +1,22 @@
 variable	cluster	n_vertices	mean_w_g.pct	mean_coefficient	mean_se	top_region1	top_region2	top_region3
-(Intercept)	1	145674	33.2970406391733	34.6653276368038	1.27129638669423	superiorfrontal (8.15%, 100%)	precentral (7.35%, 100%)	superiorparietal (7.02%, 100%)
-age	1	10242	33.1124793015093	-0.579208513770199	0.114349896180265	precentral (49.37%, 47.23%)	postcentral (30.07%, 33.71%)	paracentral (19.74%, 52.78%)
-age	2	5301	33.0753203018202	-0.390828262453056	0.0912630055103239	superiorparietal (40.92%, 21.22%)	precuneus (26.71%, 17.76%)	cuneus (15.47%, 50.06%)
-age	3	2341	32.904180957608	-0.393142783873512	0.0870071393793742	lateraloccipital (60.19%, 23.63%)	lingual (29.30%, 17.62%)	fusiform (10.51%, 5.28%)
-age	4	1286	32.8395025011854	-0.713318105619024	0.168945366345798	superiorfrontal (71.54%, 7.75%)	rostralmiddlefrontal (12.67%, 2.07%)	frontalpole (11.28%, 39.30%)
-age	5	1905	33.0577898282586	0.471628012619619	0.126433411862437	superiortemporal (55.01%, 15.26%)	insula (44.04%, 16.48%)	temporalpole (0.94%, 2.20%)
-sexFemale	1	65345	33.2230991226883	-0.750465614273112	0.13756943924994	inferiorparietal (12.53%, 84.64%)	precentral (9.90%, 60.43%)	superiorparietal (9.79%, 62.56%)
-sexFemale	2	3936	33.0055519283592	-0.834973138651046	0.165287695859173	rostralmiddlefrontal (96.39%, 48.25%)	caudalmiddlefrontal (3.61%, 4.06%)	NA
-sexFemale	3	2814	33.573371236789	-0.772090166372955	0.155092263979508	superiorfrontal (35.71%, 8.46%)	caudalanteriorcingulate (33.83%, 59.20%)	posteriorcingulate (19.97%, 18.77%)
-sexFemale	4	2019	33.5066873640983	-0.742071810440004	0.142586184505958	medialorbitofrontal (63.15%, 45.52%)	lateralorbitofrontal (36.85%, 17.09%)	NA
-sexFemale	5	842	32.3783808212962	-0.64264313809379	0.160332843413546	superiorfrontal (65.68%, 4.66%)	caudalmiddlefrontal (34.32%, 8.27%)	NA
-sexFemale	6	485	32.5301633375618	-0.577978116396776	0.15477290408513	superiorfrontal (100%, 4.08%)	NA	NA
-ethnicitynon-European	1	13416	32.8726158261407	-0.74947865760497	0.182797763676016	inferiorparietal (32.70%, 45.34%)	supramarginal (18.57%, 30.58%)	middletemporal (11.60%, 30.77%)
-ethnicitynon-European	2	2169	33.0021149838599	-0.631754121455029	0.163803710389681	precentral (62.98%, 12.76%)	postcentral (37.02%, 8.79%)	NA
-ethnicitynon-European	3	2486	33.1790351125518	-0.717281774465633	0.177591251660429	superiorparietal (54.18%, 13.18%)	postcentral (35.64%, 9.70%)	inferiorparietal (5.43%, 1.40%)
-ethnicitynon-European	4	1631	32.7074450393316	-0.610657052420751	0.147330198137765	precuneus (51.69%, 10.57%)	lingual (39.42%, 16.51%)	pericalcarine (4.72%, 4.22%)
-ethnicitynon-European	5	806	32.7497954040348	-0.625491230903429	0.162074989026814	parahippocampal (56.33%, 26.06%)	lingual (36.60%, 7.58%)	fusiform (7.07%, 1.22%)
-ethnicitynon-European	6	967	33.3239002107401	-0.778493302807813	0.209350953997722	supramarginal (63.81%, 7.57%)	postcentral (36.19%, 3.83%)	NA
-ethnicitynon-European	7	711	33.6453811365183	-0.698305168525747	0.174892411390437	lateralorbitofrontal (100%, 16.33%)	NA	NA
-ethnicitynon-European	8	614	32.5606832092372	-0.528443651304183	0.134510732665415	precentral (82.08%, 4.71%)	postcentral (17.92%, 1.20%)	NA
+(Intercept)	1	145674	33.2839243029424	34.5278522666329	1.26522952760662	superiorfrontal (8.15%, 100%)	precentral (7.35%, 100%)	superiorparietal (7.02%, 100%)
+pre_contextual_risk_z	1	29915	33.1722076354123	-0.300419926380864	0.0735478036048349	postcentral (16.82%, 55.07%)	precentral (16.55%, 46.25%)	supramarginal (11.61%, 42.61%)
+pre_contextual_risk_z	2	1586	32.933085829732	-0.217690743468373	0.0530592788499398	precuneus (56.12%, 11.16%)	lingual (29.45%, 11.99%)	pericalcarine (9.58%, 8.34%)
+pre_contextual_risk_z	3	1332	33.0285315496481	-0.26853790976577	0.0661246757646715	lateralorbitofrontal (98.87%, 30.25%)	insula (1.13%, 0.29%)	NA
+pre_contextual_risk_z	4	1129	31.283912511068	-0.246360058260239	0.061931950336304	fusiform (51.73%, 12.53%)	lingual (27.46%, 7.96%)	parahippocampal (20.81%, 13.49%)
+pre_contextual_risk_z	5	430	32.6006816533327	-0.176707557918027	0.0462930417944526	cuneus (50.23%, 13.19%)	precuneus (35.35%, 1.91%)	superiorparietal (14.42%, 0.61%)
+pre_contextual_risk_z	6	597	32.7669222076831	-0.32537390721004	0.0848667960570286	superiorfrontal (100%, 5.03%)	NA	NA
+pre_contextual_risk_z	7	629	32.0358638044328	-0.283081650639187	0.073704169692978	superiorparietal (52.15%, 3.21%)	inferiorparietal (47.85%, 3.11%)	NA
+pre_contextual_risk_z	8	485	33.2785590325883	-0.359654682936128	0.0941570654357831	inferiortemporal (58.56%, 6.77%)	fusiform (41.44%, 4.31%)	NA
+pre_contextual_risk_z	9	418	34.2500748168609	-0.25287182254797	0.0708196298642592	parstriangularis (89.71%, 15.76%)	parsorbitalis (10.29%, 4.55%)	NA
+age	1	10326	33.0961770006924	-0.580630705845742	0.114499258976729	precentral (49.28%, 47.54%)	postcentral (29.96%, 33.86%)	paracentral (19.94%, 53.75%)
+age	2	5345	33.0603104979687	-0.390477342369737	0.0910350199325326	superiorparietal (40.49%, 21.17%)	precuneus (26.77%, 17.94%)	cuneus (15.75%, 51.40%)
+age	3	2369	32.9090254943261	-0.393702342615645	0.0870722096701144	lateraloccipital (60.53%, 24.05%)	lingual (29.00%, 17.64%)	fusiform (10.47%, 5.32%)
+age	4	1226	32.8861172062394	-0.708830893866195	0.169274371718991	superiorfrontal (71.78%, 7.41%)	rostralmiddlefrontal (13.05%, 2.03%)	frontalpole (11.26%, 37.40%)
+age	5	1927	33.0117842637756	0.47326754639046	0.126738267739511	superiortemporal (55.53%, 15.58%)	insula (42.81%, 16.21%)	temporalpole (1.66%, 3.92%)
+sexFemale	1	65711	33.2097942366744	-0.751345066359093	0.137433391793862	inferiorparietal (12.44%, 84.51%)	superiorparietal (9.88%, 63.52%)	precentral (9.85%, 60.46%)
+sexFemale	2	4203	33.1394390649286	-0.821536405821684	0.165094433772034	rostralmiddlefrontal (96.53%, 51.59%)	caudalmiddlefrontal (3.21%, 3.86%)	lateralorbitofrontal (0.26%, 0.25%)
+sexFemale	3	2825	33.5491503906177	-0.770728366206178	0.154411897195124	superiorfrontal (35.22%, 8.38%)	caudalanteriorcingulate (33.95%, 59.64%)	posteriorcingulate (20.04%, 18.90%)
+sexFemale	4	2030	33.5082997028668	-0.739039232813079	0.142370737274292	medialorbitofrontal (62.96%, 45.63%)	lateralorbitofrontal (37.04%, 17.27%)	NA
+sexFemale	5	871	32.4074726854391	-0.644137036718266	0.159962779088491	superiorfrontal (66.36%, 4.87%)	caudalmiddlefrontal (33.64%, 8.39%)	NA
+sexFemale	6	773	32.7512181129139	-0.575101194375545	0.153416930472558	superiorfrontal (100%, 6.51%)	NA	NA

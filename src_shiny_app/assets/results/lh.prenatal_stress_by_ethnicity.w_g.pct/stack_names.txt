@@ -5,7 +5,5 @@ stack_number	stack_name
 4	ethnicityother European
 5	age
 6	sexFemale
-7	prenatal_smoking
-8	prenatal_alcohol
-9	prenatal_stress_z:ethnicitynon-European
-10	prenatal_stress_z:ethnicityother European
+7	prenatal_stress_z:ethnicitynon-European
+8	prenatal_stress_z:ethnicityother European
