@@ -8,7 +8,7 @@ from definitions.backend_funcs import detect_models, extract_results, compute_ov
     plot_surfmap, plot_overlap
 
 @module.ui
-def single_result_ui(start_model='postnatal_stress'):
+def single_result_ui(start_model):
     model_choice = ui.input_selectize(
         id='select_model',
         label='Choose model',
@@ -88,7 +88,7 @@ def update_single_result(input: Inputs, output: Outputs, session: Session) -> tu
         r_nc = int(n_clusters[1])
 
         return ui.markdown(
-            f'**{l_nc+r_nc}** clusters identified ({l_nc} in the left and {r_nc} in the right hemishpere).<br />'
+            f'**{l_nc+r_nc}** clusters identified ({l_nc} in the left and {r_nc} in the right hemisphere).<br />'
             f'Mean beta value [range] = **{mean_beta:.2f}** [{min_beta:.2f}; {max_beta:.2f}]')
 
     @reactive.Calc
@@ -156,8 +156,8 @@ app_ui = ui.page_fillable(
         ui.nav_spacer(),
         ui.nav_panel('Main results',
                      'Welcome to BrainMApp',  # Spacer - fix with padding later or also never
-                     single_result_ui('result1', start_model='prenatal_stress'),
-                     single_result_ui('result2', start_model='postnatal_stress'),
+                     single_result_ui('result1', start_model='prenatal_stress_conf_adjusted'),
+                     single_result_ui('result2', start_model='postnatal_stress_conf_adjusted'),
                      ' ',  # Spacer
                      value='tab1'
                      ),
