@@ -5,6 +5,8 @@ Vertex-wise associations between early-life stress (ELS) exposure during gestati
  - **`1.els_brain_merge.R`**: reads the imputed ELS data mids object [ imputation procedure described in Defina et al. (2023)] and merges it with the necessary neuroimaging metadata
  - **`2.clean_and_filter.R`**: recode or rename variables, and perform sample selection
  - **`3.qdecr_analyses.R`**: main analyses = vertex-wise associations between each ELS exposure of interest and GWC.
+These steps were run in sequence using `run_pipeline.sh`.
+ - **`4.figures.ipynb`**: jupyter notebook used to generate the figures included in the manuscript. 
 
 ## 3D brain surface maps
 Interactive 3D brain surface maps representing the associations examined in this project can be visualized using this [web application](https://seredef.shinyapps.io/brainmapp2/). 
