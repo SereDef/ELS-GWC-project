@@ -10,6 +10,10 @@ setwd(project_dir)
 # sample <- readRDS(file.choose())
 sample <- readRDS(file.path(project_dir, "Data/ELS_brain_sample.rds"))
 
+print(cor(complete(sample,0)[c('prenatal_stress', 'postnatal_stress')], use='pairwise.complete.obs'))
+
+preposcor <- miceadds::micombine.cor(sample, variables=c('prenatal_stress', 'postnatal_stress'))
+print(preposcor)
 
 ld <- complete(sample, action = 'long', include = FALSE)
 
@@ -44,7 +48,7 @@ summ1 <- cont_summ(c('prenatal_stress',
                      'post_life_events','post_contextual_risk','post_parental_risk','post_interpersonal_risk','post_direct_victimization', 
                      'age', 'mean_cortical_thickness_lh', 'mean_cortical_thickness_rh'))
 
-summ2 <- do.call('rbind', lapply(c('sex', 'ethnicity', 'prenatal_smoking', 'prenatal_alcohol'), cate_summ))
+summ2 <- do.call('rbind', lapply(c('sex', 'ethnicity', 'prenatal_smoking', 'prenatal_alcohol', 'm_education'), cate_summ))
 
 total_summ <- rbind(summ1,summ2)
 
